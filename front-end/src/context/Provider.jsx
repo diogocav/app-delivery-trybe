@@ -4,6 +4,7 @@ import Context from './Context';
 
 function Provider({ children }) {
   const [isDisabled, setIsDisabled] = useState(true);
+  const [isDisabledLoginError, setIsDisabledLoginError] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -30,23 +31,31 @@ function Provider({ children }) {
     setPassword(target.value);
   }, [setPassword]);
 
-  /*  const handleClick = () => {
-    localStorage.setItem('user', JSON.stringify({ email }));
-    history.push('/meals');
-  }; */
+  const handleClickLogin = useCallback(async () => {
+    const result = await loginFetch(email, password);
+
+    if (result.message !== undefined) setIsDisabledLoginError(true);
+    setIsDisabledLoginError(false);
+    // localStorage.setItem('user', JSON.stringify({ email }));
+    // history.push('/meals');
+  }, [setIsDisabledLoginError, email, password]);
 
   const context = useMemo(() => ({
     email,
     password,
     isDisabled,
+    isDisabledLoginError,
     handleEmail,
     handlePassword,
+    handleClickLogin,
   }), [
     email,
     password,
     isDisabled,
+    isDisabledLoginError,
     handleEmail,
     handlePassword,
+    handleClickLogin,
   ]);
 
   return (

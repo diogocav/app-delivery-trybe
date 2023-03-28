@@ -7,8 +7,9 @@ export default function Login() {
     password,
     handleEmail,
     handlePassword,
-    handleClick,
+    handleClickLogin,
     isDisabled,
+    isDisabledLoginError,
   } = useContext(Context);
   return (
     <div className="login">
@@ -35,7 +36,7 @@ export default function Login() {
           data-testid="common_login__button-login"
           type="button"
           disabled={ isDisabled }
-          onClick={ handleClick }
+          onClick={ handleClickLogin }
         >
           login
         </button>
@@ -45,6 +46,7 @@ export default function Login() {
         >
           register
         </button>
+        { isDisabledLoginError && <span>}
       </form>
     </div>
   );
