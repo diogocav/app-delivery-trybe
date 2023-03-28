@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
 
-export default function Login() {
+export default function Register() {
   const {
     email,
     password,
@@ -37,13 +37,14 @@ export default function Login() {
           disabled={ isDisabled }
           onClick={ handleClick }
         >
-          login
+          Login
         </button>
         <button
-          data-testid="common_login__button-register"
+          className="button"
+          data-testid="common_login__button-register "
           type="button"
         >
-          register
+          Register
         </button>
       </form>
     </div>

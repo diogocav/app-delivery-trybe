@@ -12,7 +12,7 @@ function Provider({ children }) {
       const validEmail = /\S+@\S+\.\S+/;
       const verifyEmail = validEmail.test(email);
       const numeroMin = 6;
-      const verifyPassword = password.length > numeroMin;
+      const verifyPassword = password.length >= numeroMin;
       if ((verifyPassword && verifyEmail)) {
         setIsDisabled(false);
       } else {
