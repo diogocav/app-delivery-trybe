@@ -1,14 +1,15 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-/* import { useHistory } from 'react-router-dom'; */
+import { useHistory } from 'react-router-dom';
 import Context from './Context';
+import loginFetch from '../services/loginFetch';
 
 function Provider({ children }) {
   const [isDisabled, setIsDisabled] = useState(true);
-  const [isDisabledLoginError, setIsDisabledLoginError] = useState(true);
+  const [isDisabledLoginError, setIsDisabledLoginError] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  /* const history = useHistory(); */
+  const history = useHistory();
 
   useEffect(() => {
     const verifyBtn = () => {
@@ -35,12 +36,12 @@ function Provider({ children }) {
 
   const handleClickLogin = useCallback(async () => {
     const result = await loginFetch(email, password);
-
     if (result.message !== undefined) setIsDisabledLoginError(true);
-    setIsDisabledLoginError(false);
+    if (result.token) {
+      history.push('/customer/products');
+    }
     // localStorage.setItem('user', JSON.stringify({ email }));
-    // history.push('/meals');
-  }, [setIsDisabledLoginError, email, password]);
+  }, [setIsDisabledLoginError, email, password, history]);
 
   const context = useMemo(() => ({
     email,

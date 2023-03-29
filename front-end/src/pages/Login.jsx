@@ -50,7 +50,7 @@ export default function Login() {
           </button>
         </Link>
         {
-          !isDisabledLoginError && (
+          isDisabledLoginError && (
             <h3 data-testid="common_login__element-invalid-email">
               Login não foi realizado com sucesso
             </h3>)

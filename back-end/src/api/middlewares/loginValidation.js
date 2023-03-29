@@ -21,7 +21,7 @@ const validateLogin = (req, res, next) => {
     if (error.details[0].message.includes('All fields')) {
       return res.status(400).json({ message: error.details[0].message });
     }
-    return res.status(401).json({ message: error.details[0].message });
+    return res.status(404).json({ message: error.details[0].message });
   }
   return next();
 };

@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const GenerateNewToken = require('../middlewares/generateToken');
 const loginService = require('../services/LoginService');
 
@@ -7,13 +7,12 @@ const login = async (req, res) => {
 
   const user = await loginService.loginCheck(email);
 
-  if (!user) { return res.status(401).json({ message: 'Invalid email' }); }
+  if (!user) { return res.status(404).json({ message: 'Invalid email' }); }
 
-  let checkPassword;
-  if (user.password !== undefined) {
-    checkPassword = bcrypt.compareSync(password, user.password);
-  }
-  if (!checkPassword) return res.status(401).json({ message: 'Invalid password' });
+  const hash = crypto.createHash('md5').update(password).digest('hex');
+  const checkPassword = user.password === hash;
+  
+  if (!checkPassword) return res.status(404).json({ message: 'Invalid password' });
 
   delete user.password;
   const token = GenerateNewToken(user);
