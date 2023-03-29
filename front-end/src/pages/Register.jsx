@@ -10,7 +10,7 @@ export default function Register() {
     handleEmail,
     handlePassword,
     handleClickRegister,
-    isDisabled,
+    isDisabledR,
     isDisabledRegisterError,
   } = useContext(Context);
   return (
@@ -42,7 +42,7 @@ export default function Register() {
           className="button"
           data-testid="common_register__button-register"
           type="button"
-          disabled={ isDisabled }
+          disabled={ isDisabledR }
           onClick={ handleClickRegister }
         >
           CADASTRAR
