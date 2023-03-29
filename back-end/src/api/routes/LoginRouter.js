@@ -7,4 +7,4 @@ const LoginRouter = express.Router();
 
 LoginRouter.post('/', validateLogin, loginController.login);
 
-export default LoginRouter;
+module.exports = LoginRouter;

@@ -23,7 +23,7 @@ const validateLogin = (req, res, next) => {
     }
     return res.status(401).json({ message: error.details[0].message });
   }
-  return next;
+  return next();
 };
 
-export default validateLogin;
+module.exports = validateLogin;
