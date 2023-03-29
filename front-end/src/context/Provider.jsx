@@ -6,9 +6,12 @@ import loginFetch from '../services/loginFetch';
 
 function Provider({ children }) {
   const [isDisabled, setIsDisabled] = useState(true);
+  const [isDisabledR, setIsDisabledR] = useState(true);
   const [isDisabledLoginError, setIsDisabledLoginError] = useState(false);
+  const [isDisabledRegisterError, setIsDisabledRegisterError] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const history = useHistory();
 
   useEffect(() => {
@@ -16,15 +19,21 @@ function Provider({ children }) {
       const validEmail = /\S+@\S+\.\S+/;
       const verifyEmail = validEmail.test(email);
       const numeroMin = 6;
+      const numeroName = 12;
+      const verifyName = name.length >= numeroName;
       const verifyPassword = password.length >= numeroMin;
-      if ((verifyPassword && verifyEmail)) {
-        setIsDisabled(false);
-      } else {
-        setIsDisabled(true);
+      if ((verifyName && verifyEmail && verifyPassword)) {
+        return setIsDisabledR(false);
       }
+      if ((verifyPassword && verifyEmail)) {
+        setIsDisabledR(true);
+        return setIsDisabled(false);
+      }
+      setIsDisabled(true);
+      return setIsDisabledR(true);
     };
     verifyBtn();
-  }, [email, password]);
+  }, [email, password, name]);
 
   const handleEmail = useCallback(({ target }) => {
     setEmail(target.value);
@@ -33,6 +42,10 @@ function Provider({ children }) {
   const handlePassword = useCallback(({ target }) => {
     setPassword(target.value);
   }, [setPassword]);
+
+  const handleName = useCallback(({ target }) => {
+    setName(target.value);
+  }, [setName]);
 
   const handleClickLogin = useCallback(async () => {
     const result = await loginFetch(email, password);
@@ -43,22 +56,40 @@ function Provider({ children }) {
     // localStorage.setItem('user', JSON.stringify({ email }));
   }, [setIsDisabledLoginError, email, password, history]);
 
+  const handleClickRegister = useCallback(async () => {
+    const result = await registerFetch(name, email, password);
+    if (result.message !== undefined) setIsDisabledRegisterError(true);
+    if (result === 'Created') {
+      history.push('/customer/products');
+    }
+  }, [setIsDisabledRegisterError, name, email, password, history]);
+
   const context = useMemo(() => ({
     email,
     password,
+    name,
     isDisabled,
+    isDisabledR,
     isDisabledLoginError,
+    isDisabledRegisterError,
+    handleName,
     handleEmail,
     handlePassword,
     handleClickLogin,
+    handleClickRegister,
   }), [
+    name,
     email,
     password,
     isDisabled,
+    isDisabledR,
     isDisabledLoginError,
+    isDisabledRegisterError,
+    handleName,
     handleEmail,
     handlePassword,
     handleClickLogin,
+    handleClickRegister,
   ]);
 
   return (
