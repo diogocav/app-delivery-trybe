@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import Context from '../context/Context';
 
 export default function Login() {
@@ -40,12 +41,14 @@ export default function Login() {
         >
           login
         </button>
-        <button
-          data-testid="common_login__button-register"
-          type="button"
-        >
-          register
-        </button>
+        <Link to="/register">
+          <button
+            data-testid="common_login__button-register"
+            type="button"
+          >
+            register
+          </button>
+        </Link>
         {
           !isDisabledLoginError && (
             <h3 data-testid="common_login__element-invalid-email">
