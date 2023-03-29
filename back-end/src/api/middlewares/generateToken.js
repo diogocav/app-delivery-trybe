@@ -13,4 +13,4 @@ const GenerateNewToken = (user) => {
     return token;
   };
 
-export default GenerateNewToken;
+module.export = GenerateNewToken;
