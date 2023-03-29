@@ -48,7 +48,7 @@ export default function Register() {
           CADASTRAR
         </button>
         {
-          !isDisabledRegisterError && (
+          isDisabledRegisterError && (
             <h3 data-testid="common_register__element-invalid_register">
               O cadastro não foi realizado com sucesso.
             </h3>)
