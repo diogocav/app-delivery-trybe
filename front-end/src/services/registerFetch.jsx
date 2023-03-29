@@ -1,6 +1,6 @@
-const loginUrl = 'http://localhost:3001/login';
+const loginUrl = 'http://localhost:3001/register';
 
-const loginFetch = async (email, password) => {
+const registerFetch = async (name, email, password) => {
   const result = await fetch(
     loginUrl,
     {
@@ -8,7 +8,7 @@ const loginFetch = async (email, password) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ name, email, password }),
     },
   )
     .then((response) => response.json())
@@ -17,4 +17,4 @@ const loginFetch = async (email, password) => {
   return result;
 };
 
-export default loginFetch;
+export default registerFetch;
