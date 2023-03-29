@@ -46,7 +46,12 @@ export default function Login() {
         >
           register
         </button>
-        { isDisabledLoginError && <span>}
+        {
+          !isDisabledLoginError && (
+            <h3 data-testid="common_login__element-invalid-email">
+              Login não foi realizado com sucesso
+            </h3>)
+        }
       </form>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
+/* import { useHistory } from 'react-router-dom'; */
 import Context from './Context';
 
 function Provider({ children }) {
@@ -7,6 +8,7 @@ function Provider({ children }) {
   const [isDisabledLoginError, setIsDisabledLoginError] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  /* const history = useHistory(); */
 
   useEffect(() => {
     const verifyBtn = () => {
