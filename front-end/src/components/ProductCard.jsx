@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Context from '../context/Context';
 
-export default function Products({ product }) {
+export default function ProductCard({ product }) {
   const { name, urlImage, price, id } = product;
   const { value, handleInputChange } = useContext(Context);
   return (
@@ -29,12 +29,12 @@ export default function Products({ product }) {
       <input
         value={ value }
         type="number"
-        data-testid={ `customer_products__button-card-rm-item-${id}` }
+        data-testid={ `customer_products__input-card-quantity-${id}` }
         onChange={ handleInputChange }
       />
       <button
         type="button"
-        data-testid={ `customer_products__input-card-quantity-${id}` }
+        data-testid={ `customer_products__button-card-rm-item-${id}` }
       >
         -
 
@@ -43,12 +43,12 @@ export default function Products({ product }) {
   );
 }
 
-Products.propTypes = {
-  product: PropTypes.objectOf({
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    urlImage: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
+ProductCard.propTypes = {
+  product: PropTypes.shape({
+    name: PropTypes.string,
+    price: PropTypes.string,
+    urlImage: PropTypes.string,
+    id: PropTypes.number,
   }).isRequired,
 };
 
