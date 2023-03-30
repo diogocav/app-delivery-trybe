@@ -5,12 +5,10 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Products from './pages/Products';
 import './App.css';
-import NavBar from './components/NavBar';
 
 function App() {
   return (
     <div className="App">
-      <NavBar />
       <Provider>
         <Switch>
           <Route exact path="/login" component={ Login } />
@@ -19,6 +17,7 @@ function App() {
           <Route exact path="/">
             <Redirect to="/login" />
           </Route>
+          <Route path="*" component={ Login } />
         </Switch>
       </Provider>
     </div>

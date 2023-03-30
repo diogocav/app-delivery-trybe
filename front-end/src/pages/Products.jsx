@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from '../components/NavBar';
-import productsgetAllFetch from '../services/productsFetch';
 import ProductCard from '../components/ProductCard';
+import fetchApi from '../services/fetchApi';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     async function fetchProducts() {
-      const response = await productsgetAllFetch();
+      const response = await fetchApi('GET', 'products');
+
       setProducts(response);
     }
     fetchProducts();

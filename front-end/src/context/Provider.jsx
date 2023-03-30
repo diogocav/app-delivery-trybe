@@ -2,8 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import Context from './Context';
-import loginFetch from '../services/loginFetch';
-import registerFetch from '../services/registerFetch';
+import fetchApi from '../services/fetchApi';
 
 function Provider({ children }) {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -54,7 +53,7 @@ function Provider({ children }) {
   }, [setValue]);
 
   const handleClickLogin = useCallback(async () => {
-    const result = await loginFetch(email, password);
+    const result = await fetchApi('POST', 'login', { email, password });
     if (result.message !== undefined) setIsDisabledLoginError(true);
     if (result.token) {
       history.push('/customer/products');
@@ -63,7 +62,7 @@ function Provider({ children }) {
   }, [setIsDisabledLoginError, email, password, history]);
 
   const handleClickRegister = useCallback(async () => {
-    const result = await registerFetch(name, email, password);
+    const result = await fetchApi('POST', 'register', { name, email, password });
     if (result.message === 'account created') {
       history.push('/customer/products');
     } else {
