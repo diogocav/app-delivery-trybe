@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import Context from './Context';
 import loginFetch from '../services/loginFetch';
+import registerFetch from '../services/registerFetch';
 
 function Provider({ children }) {
   const [isDisabled, setIsDisabled] = useState(true);
