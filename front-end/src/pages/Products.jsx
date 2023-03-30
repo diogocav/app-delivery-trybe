@@ -1,8 +1,20 @@
 import React from 'react';
 import NavBar from '../components/NavBar';
+import productsgetAllFetch from '../services/productsFetch';
 
 export default function Products() {
-  const { products, value, handleInputChange } = useContext(Context);
+  const [products, setProducts] = useState([]);
+  const { value, handleInputChange } = useContext(Context);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      const response = await productsgetAllFetch();
+      const responseData = await response.json();
+      setProducts(responseData);
+    }
+    fetchProducts();
+  }, []);
+
   return (
     <div>
       <NavBar />
