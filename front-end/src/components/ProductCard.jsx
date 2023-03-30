@@ -2,9 +2,14 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Context from '../context/Context';
 
+function formatPrice(price) {
+  return price.toString().replace('.', ',');
+}
+
 export default function ProductCard({ product }) {
   const { name, urlImage, price, id } = product;
   const { value, handleInputChange } = useContext(Context);
+  const formattedPrice = formatPrice(price);
   return (
     <div key={ id }>
       <h3 data-testid={ `customer_products__element-card-title-${id}` }>
@@ -17,7 +22,7 @@ export default function ProductCard({ product }) {
         style={ { width: '200px', height: '150px' } }
       />
       <h3 data-testid={ `customer_products__element-card-price-${id}` }>
-        {price}
+        {formattedPrice}
       </h3>
       <button
         type="button"
