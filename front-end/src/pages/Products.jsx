@@ -1,4 +1,4 @@
-/* import React from 'react';
+import React from 'react';
 import NavBar from '../components/NavBar';
 
 export default function Products() {
@@ -49,5 +49,4 @@ export default function Products() {
     </div>
   );
 }
- // fazer fetch dos produtos que estão em produts no provider antes fazer o endpoint no back
- */
+// fazer fetch dos produtos que estão em produts no provider antes fazer o endpoint no back
