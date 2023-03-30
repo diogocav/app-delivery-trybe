@@ -13,6 +13,7 @@ function Provider({ children }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [value, setValue] = useState(0);
   const history = useHistory();
 
   useEffect(() => {
@@ -48,6 +49,10 @@ function Provider({ children }) {
     setName(target.value);
   }, [setName]);
 
+  const handleInputChange = useCallback(({ target }) => {
+    setValue(target.value);
+  }, [setValue]);
+
   const handleClickLogin = useCallback(async () => {
     const result = await loginFetch(email, password);
     if (result.message !== undefined) setIsDisabledLoginError(true);
@@ -67,6 +72,7 @@ function Provider({ children }) {
   }, [setIsDisabledRegisterError, name, email, password, history]);
 
   const context = useMemo(() => ({
+    value,
     email,
     password,
     name,
@@ -79,7 +85,9 @@ function Provider({ children }) {
     handlePassword,
     handleClickLogin,
     handleClickRegister,
+    handleInputChange,
   }), [
+    value,
     name,
     email,
     password,
@@ -92,6 +100,7 @@ function Provider({ children }) {
     handlePassword,
     handleClickLogin,
     handleClickRegister,
+    handleInputChange,
   ]);
 
   return (
