@@ -1,8 +1,8 @@
-const registerUrl = 'http://localhost:3001/prodcuts';
+const productsUrl = 'http://localhost:3001/products';
 
-const productsgetAllFetch = async () => {
+const productsGetAllFetch = async () => {
   const result = await fetch(
-    registerUrl,
+    productsUrl,
     {
       method: 'GET',
       headers: {
@@ -16,4 +16,4 @@ const productsgetAllFetch = async () => {
   return result;
 };
 
-export default productsgetAllFetch;
+export default productsGetAllFetch;
