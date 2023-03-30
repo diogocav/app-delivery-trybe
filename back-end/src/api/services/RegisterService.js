@@ -5,14 +5,17 @@ const register = async (name, email, password) => {
         name, 
         email, 
         password,
+        role: 'customer',
       });
 
   return dataValues;
 };
 
-const findOne = async (type) => {
-    const user = await User.findOne({
-      where: { type },
+const findOne = async (type, value) => {
+  const payload = {};
+  payload[type] = value;
+  const user = await User.findOne({
+      where: { ...payload },
     });
   
     return user;

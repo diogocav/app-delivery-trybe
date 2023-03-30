@@ -8,7 +8,7 @@ const register = async (req, res) => {
 
   await registerService.register(name, email, passwordHash);
 
-  return res.status(201).json('Created');
+  return res.status(201).json({ message: 'account created' });
 };
 
 module.exports = {

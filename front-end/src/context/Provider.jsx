@@ -59,9 +59,10 @@ function Provider({ children }) {
 
   const handleClickRegister = useCallback(async () => {
     const result = await registerFetch(name, email, password);
-    if (result.message !== undefined) setIsDisabledRegisterError(true);
-    if (result === 'Created') {
+    if (result.message === 'account created') {
       history.push('/customer/products');
+    } else {
+      setIsDisabledRegisterError(true);
     }
   }, [setIsDisabledRegisterError, name, email, password, history]);
 
