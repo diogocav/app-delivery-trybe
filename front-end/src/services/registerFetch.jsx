@@ -1,8 +1,8 @@
-const loginUrl = 'http://localhost:3001/register';
+const registerUrl = 'http://localhost:3001/register';
 
 const registerFetch = async (name, email, password) => {
   const result = await fetch(
-    loginUrl,
+    registerUrl,
     {
       method: 'POST',
       headers: {

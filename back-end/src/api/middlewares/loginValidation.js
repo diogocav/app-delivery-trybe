@@ -27,7 +27,4 @@ const validateLogin = (req, res, next) => {
   return next();
 };
 
-module.exports = {
-  validateLogin,
-  loginValidation,
-};
+module.exports = validateLogin;
