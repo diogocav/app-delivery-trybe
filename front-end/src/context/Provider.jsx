@@ -57,6 +57,7 @@ function Provider({ children }) {
     const result = await fetchApi('POST', 'login', { email, password });
     if (result.message !== undefined) setIsDisabledLoginError(true);
     if (result.token) {
+      const { token } = result;
       const decoded = jwtDecode(token);
       history.push('/customer/products');
       localStorage.setItem('user', JSON.stringify({

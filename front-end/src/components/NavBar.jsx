@@ -26,10 +26,14 @@ export default function NavBar() {
         >
           {name}
         </li>
-        <li
-          data-testid="customer_products__element-navbar-link-logout"
-        >
-          <Link to="/logout" onClick={ () => localStorage.removeItem('user') }>Sair</Link>
+        <li>
+          <Link
+            to="/login"
+            data-testid="customer_products__element-navbar-link-logout"
+            onClick={ () => localStorage.removeItem('user') }
+          >
+            Sair
+          </Link>
 
         </li>
       </ul>
