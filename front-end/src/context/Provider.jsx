@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 import Context from './Context';
 import fetchApi from '../services/fetchApi';
 
@@ -56,7 +57,12 @@ function Provider({ children }) {
     const result = await fetchApi('POST', 'login', { email, password });
     if (result.message !== undefined) setIsDisabledLoginError(true);
     if (result.token) {
+      const { token } = result;
+      const decoded = jwtDecode(token);
       history.push('/customer/products');
+      localStorage.setItem('user', JSON.stringify({
+        ...decoded.data,
+        token }));
     }
     // localStorage.setItem('user', JSON.stringify({ email }));
   }, [setIsDisabledLoginError, email, password, history]);

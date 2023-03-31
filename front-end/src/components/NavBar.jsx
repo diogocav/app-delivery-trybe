@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function NavBar() {
+  const [name, setName] = useState('');
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem('user'));
+    setName(userInfo.name);
+  }, []);
+
   return (
     <nav>
       <ul>
@@ -15,11 +21,19 @@ export default function NavBar() {
         >
           <Link to="/orders"> Meus Pedidos</Link>
         </li>
-        <li data-testid="customer_products__element-navbar-user-full-name">Nome</li>
         <li
-          data-testid="customer_products__element-navbar-link-logout"
+          data-testid="customer_products__element-navbar-user-full-name"
         >
-          <Link to="/logout">Sair</Link>
+          {name}
+        </li>
+        <li>
+          <Link
+            to="/login"
+            data-testid="customer_products__element-navbar-link-logout"
+            onClick={ () => localStorage.removeItem('user') }
+          >
+            Sair
+          </Link>
 
         </li>
       </ul>
