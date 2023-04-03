@@ -6,7 +6,6 @@ import ShoppingCart from '../components/ShoppingCart';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
-  const [cart] = useState([]);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -29,7 +28,7 @@ export default function Products() {
 
         />
       ))}
-      <ShoppingCart productCart={ cart } />
+      <ShoppingCart />
     </div>
   );
 }

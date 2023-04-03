@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Context from '../context/Context';
 
@@ -8,51 +8,50 @@ function formatPrice(price) {
 
 export default function ProductCard({ product }) {
   const { name, urlImage, price, id } = product;
-  const [totalProducts, setTotalProducts] = useState(0);
-  const { value, handleInputChange } = useContext(Context);
-  const [productsCart, setProductsCart] = useState([]);
-  /*  const [totalPrice, setTotalPrice] = useState(0); */
+  const [quantityProducts, setQuantityProducts] = useState(0);
+  const { setUpdatedValueProducts } = useContext(Context);
   const formattedPrice = formatPrice(price);
 
   useEffect(() => {
     const savedProducts = JSON.parse(localStorage.getItem('cart')) || [];
-    setProductsCart(savedProducts);
-  }, []);
+    const itemCart = savedProducts.find((item) => item.id === id);
+    if (itemCart) {
+      const { quantity } = itemCart;
+      setQuantityProducts(quantity);
+    }
+  }, [id]);
 
-  function addProduct(idItem) {
-    const copyProducts = [...productsCart];
-    const itemCart = copyProducts.find((item) => item.id === idItem);
+  useEffect(() => {
+    const productsCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const itemCart = productsCart.find((item) => item.id === id);
     if (!itemCart) {
-      copyProducts.push({ id: idItem, quantity: 1 });
+      productsCart.push({ id, quantity: quantityProducts, price });
     } else {
-      itemCart.quantity += 1;
+      itemCart.quantity = quantityProducts;
     }
-    setProductsCart(copyProducts);
-    setTotalProducts((prevQtd) => prevQtd + 1);
-    localStorage.setItem('cart', JSON.stringify([...copyProducts, productsCart]));
+    localStorage.setItem('cart', JSON.stringify(productsCart));
+  }, [quantityProducts, id, price]);
+
+  function addProduct() {
+    setQuantityProducts((prevQtd) => +prevQtd + 1);
+    setUpdatedValueProducts((prevQtd) => !prevQtd);
   }
 
-  function removeProduct(idItem) {
-    const copyProducts = [...productsCart];
-    const itemCart = copyProducts.find((item) => item.id === idItem);
-    if (itemCart.quantity === 0) {
-      return itemCart;
+  function removeProduct() {
+    if (quantityProducts !== 0) {
+      setQuantityProducts((prevQtd) => +prevQtd - 1);
+      setUpdatedValueProducts((prevQtd) => !prevQtd);
     }
-    if (itemCart.quantity > 1) {
-      itemCart.quantity -= 1;
-      setProductsCart([copyProducts]);
-    } else {
-      const arrayFiltered = copyProducts.filter((itens) => itens.id !== idItem);
-      setProductsCart(arrayFiltered);
-    }
-    setTotalProducts((prevQtd) => prevQtd - 1);
-    localStorage.setItem('cart', JSON.stringify([...copyProducts, productsCart]));
   }
 
-  /*   function clearCart() {
-    setProductsCart([]);
+  function editProduct({ target }) {
+    const { value } = target;
+    if (value >= 0) {
+      setQuantityProducts(value);
+      setUpdatedValueProducts((prevQtd) => !prevQtd);
+    }
   }
- */
+
   return (
     <div key={ id }>
       <h3 data-testid={ `customer_products__element-card-title-${id}` }>
@@ -70,21 +69,21 @@ export default function ProductCard({ product }) {
       <button
         type="button"
         data-testid={ `customer_products__button-card-add-item-${id}` }
-        onClick={ () => addProduct(id) }
+        onClick={ () => addProduct() }
       >
         +
 
       </button>
       <input
-        value={ totalProducts }
+        value={ quantityProducts }
         type="number"
         data-testid={ `customer_products__input-card-quantity-${id}` }
-        onChange={ () => handleInputChange(value) }
+        onChange={ (e) => editProduct(e) }
       />
       <button
         type="button"
         data-testid={ `customer_products__button-card-rm-item-${id}` }
-        onClick={ () => removeProduct(id) }
+        onClick={ () => removeProduct() }
       >
         -
 
