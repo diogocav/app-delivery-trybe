@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Context from '../context/Context';
 
@@ -11,17 +11,14 @@ export default function ProductCard({ product }) {
   const [totalProducts, setTotalProducts] = useState(0);
   const { value, handleInputChange } = useContext(Context);
   const [productsCart, setProductsCart] = useState([]);
+  /*  const [totalPrice, setTotalPrice] = useState(0); */
   const formattedPrice = formatPrice(price);
 
-  /*  useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem('cart')) || '';
-    setProductsCart(savedCart);
+  useEffect(() => {
+    const savedProducts = JSON.parse(localStorage.getItem('cart')) || [];
+    setProductsCart(savedProducts);
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(productsCart));
-  }, [productsCart]);
- */
   function addProduct(idItem) {
     const copyProducts = [...productsCart];
     const itemCart = copyProducts.find((item) => item.id === idItem);
@@ -32,6 +29,7 @@ export default function ProductCard({ product }) {
     }
     setProductsCart(copyProducts);
     setTotalProducts((prevQtd) => prevQtd + 1);
+    localStorage.setItem('cart', JSON.stringify([...copyProducts, productsCart]));
   }
 
   function removeProduct(idItem) {
@@ -48,6 +46,7 @@ export default function ProductCard({ product }) {
       setProductsCart(arrayFiltered);
     }
     setTotalProducts((prevQtd) => prevQtd - 1);
+    localStorage.setItem('cart', JSON.stringify([...copyProducts, productsCart]));
   }
 
   /*   function clearCart() {

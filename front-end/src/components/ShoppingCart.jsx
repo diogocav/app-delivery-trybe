@@ -22,20 +22,13 @@ export default function ShoppingCart({ productCart }) {
       <button
         type="button"
         data-testid="customer_products__button-cart"
-        disabled
+        disabled={ total === 0 }
+        onClick={ () => history.push('/customer/checkout') }
       >
-        <span>
+        <span data-testid="customer_products__checkout-bottom-value">
           {`Total: ${total}`}
 
         </span>
-      </button>
-
-      <button
-        type="button"
-        data-testid="customer_products__checkout-bottom-value"
-        onClick={ () => history.push('/customer/checkout') }
-      >
-        checkout
       </button>
     </div>
   );
