@@ -25,12 +25,12 @@ export default function ProductCard({ product }) {
     const productsCart = JSON.parse(localStorage.getItem('cart')) || [];
     const itemCart = productsCart.find((item) => item.id === id);
     if (!itemCart) {
-      productsCart.push({ id, quantity: quantityProducts, price });
+      productsCart.push({ id, name, quantity: quantityProducts, price });
     } else {
       itemCart.quantity = quantityProducts;
     }
     localStorage.setItem('cart', JSON.stringify(productsCart));
-  }, [quantityProducts, id, price]);
+  }, [quantityProducts, id, price, name]);
 
   function addProduct() {
     setQuantityProducts((prevQtd) => +prevQtd + 1);
