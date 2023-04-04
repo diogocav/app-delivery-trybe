@@ -14,7 +14,7 @@ const login = async (req, res) => {
   
   if (!checkPassword) return res.status(404).json({ message: 'Invalid password' });
 
-  const payload = { name: user.name, email: user.email, role: user.role };
+  const payload = { id: user.id, name: user.name, email: user.email, role: user.role };
   const token = GenerateNewToken(payload);
 
   return res.status(200).json({ token });

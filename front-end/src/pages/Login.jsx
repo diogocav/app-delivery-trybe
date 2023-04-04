@@ -19,15 +19,15 @@ export default function Login() {
   };
   const validateLogin = () => validateEmail(email) && validatePassword(password);
   const handleClickLogin = useCallback(async () => {
-    const result = await fetchApi('POST', 'login', { email, password });
+    const result = await fetchApi('POST', 'login', '', { email, password });
     if (result.message !== undefined) setIsDisabledLoginError(true);
     if (result.token) {
       const { token } = result;
       const decoded = jwtDecode(token);
-      history.push('/customer/products');
       localStorage.setItem('user', JSON.stringify({
         ...decoded.data,
         token }));
+      history.push('/customer/products');
     }
   }, [setIsDisabledLoginError, email, password, history]);
   return (
