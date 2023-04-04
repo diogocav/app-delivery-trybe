@@ -23,13 +23,12 @@ module.exports = {
           key: 'id' 
         } 
       },
-      totalPrice: { allowNull: false, type: Sequelize.STRING, field: 'total_price' },
+      totalPrice: { allowNull: false, type: Sequelize.DECIMAL(9, 2), field: 'total_price' },
       deliveryAddress: { allowNull: false, type: Sequelize.STRING, field: 'delivery_address' },
       deliveryNumber: { allowNull: false, type: Sequelize.STRING, field: 'delivery_number' },
       saleDate: {
         allowNull: false,
-        type: Sequelize.DATEONLY,
-        defaultValue: new Date(),
+        type: Sequelize.DATE,
         field: 'sale_date',
       },
       status: { allowNull: false, type: Sequelize.STRING },

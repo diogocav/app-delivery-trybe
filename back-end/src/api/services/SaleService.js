@@ -8,11 +8,12 @@ const createNewSale = async ({
     deliveryAddress,
     deliveryNumber,
 }) => {
-    // console.log(deliveryAddress);
+    const finalPrice = +totalPrice.toString()
+    .replace(',', '.');
     const { dataValues } = await Sale.create({
         userId,
         sellerId,
-        totalPrice,
+        totalPrice: finalPrice,
         deliveryAddress,
         deliveryNumber,
         status: 'Pendente',

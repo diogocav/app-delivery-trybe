@@ -4,22 +4,25 @@ import fetchApi from '../services/fetchApi';
 
 export default function AdressForm({ handleResponsiblePerson,
   handleAdress,
-  handleNumber }) {
+  handleNumber,
+  setResponsiblePerson }) {
   const [sellers, setSellers] = useState([]);
 
   const getSellers = async () => {
     const result = await fetchApi(
       'GET',
       'users/seller',
-      
     );
-    console.log(result);
     setSellers(result);
   };
 
   useEffect(() => {
     getSellers();
   }, []);
+
+  useEffect(() => {
+    setResponsiblePerson(sellers[0]?.id);
+  }, [sellers, setResponsiblePerson]);
 
   return (
     <form action="">
@@ -53,7 +56,7 @@ export default function AdressForm({ handleResponsiblePerson,
       <label htmlFor="number">
         Número
         <input
-          type="text"
+          type="number"
           id="number"
           name="number"
           onChange={ handleNumber }
@@ -68,4 +71,5 @@ AdressForm.propTypes = {
   handleResponsiblePerson: PropTypes.func.isRequired,
   handleAdress: PropTypes.func.isRequired,
   handleNumber: PropTypes.func.isRequired,
+  setResponsiblePerson: PropTypes.func.isRequired,
 };

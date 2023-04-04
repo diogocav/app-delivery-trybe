@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import ProductRow from '../components/ProductRow';
 import AdressForm from '../components/AdressForm';
+import fetchApi from '../services/fetchApi';
 
 export default function Checkout() {
   const [productsSale, setProductsSale] = useState([]);
@@ -99,6 +100,7 @@ export default function Checkout() {
 
       <AdressForm
         handleResponsiblePerson={ handleResponsiblePerson }
+        setResponsiblePerson={ setResponsiblePerson }
         handleAdress={ handleAdress }
         handleNumber={ handleNumber }
       />
