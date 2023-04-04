@@ -31,7 +31,7 @@ export default function Checkout() {
     setNumber(target.value);
   };
 
-  const handleClickFinishSale = () => {
+  const handleClickFinishSale = (productsSale, responsiblePerson, adress, number) => {
 
   };
 
