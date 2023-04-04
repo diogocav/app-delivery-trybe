@@ -1,9 +1,27 @@
-const create = async (req, res) => 
-  // const { productsSale, orderInfo } = req.body;
+const saleService = require('../services/SaleService');
+// const userService = require('../services/UserService');
 
-  // await saleService.create(saleId, productId, quantity);
+const create = async (req, res) => {
+  const { productsSale, orderInfo, userInfo, totalOrderPrice } = req.body;
 
-   res.status(201).json({ message: 'order registered' });
+  const newSaleInfo = {
+    userId: userInfo.id,
+    sellerId: orderInfo.responsiblePerson,
+    totalPrice: totalOrderPrice,
+    deliveryAddress: orderInfo.adress,
+    deliveryNumber: orderInfo.number,
+  };
+
+  const newSale = await saleService.createNewSale(newSaleInfo);
+
+  const allProductsSale = await productsSale.map(async (product) => {
+    await saleService.createNewSaleProduct(newSale.id, product.id, product.quantity);
+  });
+  Promise.all(allProductsSale);
+
+   res.status(201).json({ id: newSale.id });
+};
+
 module.exports = {
     create,
 };

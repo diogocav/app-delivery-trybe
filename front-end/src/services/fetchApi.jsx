@@ -1,4 +1,4 @@
-const fetchApi = async (methodHttp, endpoint, payload) => {
+const fetchApi = async (methodHttp, endpoint, auth = '', payload) => {
   const url = `http://localhost:3001/${endpoint}`;
   const method = methodHttp.toUpperCase();
   let result;
@@ -8,6 +8,7 @@ const fetchApi = async (methodHttp, endpoint, payload) => {
       {
         method,
         headers: {
+          Authorization: auth,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
@@ -22,6 +23,7 @@ const fetchApi = async (methodHttp, endpoint, payload) => {
         method,
         headers: {
           'Content-Type': 'application/json',
+          Authorization: auth,
         },
       },
     )

@@ -26,7 +26,13 @@ module.exports = {
       totalPrice: { allowNull: false, type: Sequelize.STRING, field: 'total_price' },
       deliveryAddress: { allowNull: false, type: Sequelize.STRING, field: 'delivery_address' },
       deliveryNumber: { allowNull: false, type: Sequelize.STRING, field: 'delivery_number' },
-      saleDate: { allowNull: false, type: Sequelize.STRING, field: 'sale_date' },
+      saleDate: {
+        allowNull: false,
+        type: Sequelize.DATEONLY,
+        defaultValue: new Date(),
+        field: 'sale_date',
+      },
+      status: { allowNull: false, type: Sequelize.STRING },
     }),
 
   down: async (queryInterface, _Sequelize) => queryInterface.dropTable('sales'),

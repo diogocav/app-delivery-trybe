@@ -24,7 +24,7 @@ export default function Register() {
   const validateRegister = () => validateName(name)
     && validateEmail(email) && validatePassword(password);
   const handleClickRegister = useCallback(async () => {
-    const result = await fetchApi('POST', 'register', { name, email, password });
+    const result = await fetchApi('POST', 'register', '', { name, email, password });
     if (result.message === 'account created') {
       history.push('/customer/products');
     } else {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import ProductRow from '../components/ProductRow';
 import AdressForm from '../components/AdressForm';
@@ -9,6 +10,8 @@ export default function Checkout() {
   const [responsiblePerson, setResponsiblePerson] = useState('');
   const [adress, setAdress] = useState('');
   const [number, setNumber] = useState('');
+
+  const history = useHistory();
 
   const handleClickRemoveItem = (name) => {
     const newProductsSale = productsSale.filter((product) => product.name !== name);
@@ -31,8 +34,17 @@ export default function Checkout() {
     setNumber(target.value);
   };
 
-  const handleClickFinishSale = (productsSale, responsiblePerson, adress, number) => {
+  const handleClickFinishSale = async () => {
+    const userInfo = JSON.parse(localStorage.getItem('user'));
+    const orderInfo = { responsiblePerson, adress, number };
 
+    const result = await fetchApi(
+      'POST',
+      'orders',
+      userInfo.token,
+      { productsSale, orderInfo, userInfo, totalOrderPrice },
+    );
+    history.push(`/customer/orders/${result.id}`);
   };
 
   useEffect(() => {
@@ -94,9 +106,7 @@ export default function Checkout() {
       <button
         type="button"
         data-testid="customer_checkout__button-submit-order"
-        onClick={
-          () => handleClickFinishSale(productsSale, responsiblePerson, adress, number)
-        }
+        onClick={ handleClickFinishSale }
       >
         Finalizar
       </button>
