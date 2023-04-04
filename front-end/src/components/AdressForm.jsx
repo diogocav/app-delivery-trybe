@@ -42,10 +42,7 @@ export default function ProductRow({ handleResponsiblePerson,
 }
 
 ProductRow.propTypes = {
-    product: PropTypes.shape({
-      name: PropTypes.string,
-      price: PropTypes.string,
-      quantity: PropTypes.number,
-    }).isRequired,
-    index: PropTypes.number.isRequired,
-  };
+  handleResponsiblePerson: PropTypes.func.isRequired,
+  handleAdress: PropTypes.func.isRequired,
+  handleNumber: PropTypes.func.isRequired,
+};

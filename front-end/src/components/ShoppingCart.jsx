@@ -5,7 +5,6 @@ import Context from '../context/Context';
 export default function ShoppingCart() {
   const history = useHistory();
   const [valueProducts, setValueProducts] = useState(0);
-  console.log(valueProducts);
   const { updatedValueProducts } = useContext(Context);
 
   useEffect(() => {

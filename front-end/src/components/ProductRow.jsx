@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// export default function ProductRow(product, index, handleClickRemoveItem) {
-export default function ProductRow({ product, index }) {
+export default function ProductRow({ product, index, handleClickRemoveItem }) {
   const { name, quantity, price } = product;
+
   return (
     <tr>
       <td
         data-testid={ `customer_checkout__element-order-table-item-number-${index}` }
       >
-        {index}
+        {+index + 1}
       </td>
       <td
         data-testid={ `customer_checkout__element-order-table-name-${index}` }
@@ -24,22 +24,25 @@ export default function ProductRow({ product, index }) {
       <td
         data-testid={ `customer_checkout__element-order-table-unit-price-${index}` }
       >
-        {price}
+        {price.toString()
+          .replace('.', ',')}
       </td>
       <td
         data-testid={ `customer_checkout__element-order-table-sub-total-${index}` }
       >
-        {+price * +quantity}
+        {(+price * +quantity).toFixed(2)
+          .toString()
+          .replace('.', ',')}
       </td>
       <td
         data-testid={ `customer_checkout__element-order-table-remove-${index}` }
       >
-        {/* <button
+        <button
           type="button"
           onClick={ () => handleClickRemoveItem(name) }
         >
           Remover
-        </button> */}
+        </button>
       </td>
     </tr>
   );
@@ -52,4 +55,5 @@ ProductRow.propTypes = {
     quantity: PropTypes.number,
   }).isRequired,
   index: PropTypes.number.isRequired,
+  handleClickRemoveItem: PropTypes.func.isRequired,
 };
