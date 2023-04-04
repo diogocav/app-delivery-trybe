@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Context from '../context/Context';
 
@@ -8,8 +8,50 @@ function formatPrice(price) {
 
 export default function ProductCard({ product }) {
   const { name, urlImage, price, id } = product;
-  const { value, handleInputChange } = useContext(Context);
+  const [quantityProducts, setQuantityProducts] = useState(0);
+  const { setUpdatedValueProducts } = useContext(Context);
   const formattedPrice = formatPrice(price);
+
+  useEffect(() => {
+    const savedProducts = JSON.parse(localStorage.getItem('cart')) || [];
+    const itemCart = savedProducts.find((item) => item.id === id);
+    if (itemCart) {
+      const { quantity } = itemCart;
+      setQuantityProducts(quantity);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    const productsCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const itemCart = productsCart.find((item) => item.id === id);
+    if (!itemCart) {
+      productsCart.push({ id, name, quantity: quantityProducts, price });
+    } else {
+      itemCart.quantity = quantityProducts;
+    }
+    localStorage.setItem('cart', JSON.stringify(productsCart));
+  }, [quantityProducts, id, price, name]);
+
+  function addProduct() {
+    setQuantityProducts((prevQtd) => +prevQtd + 1);
+    setUpdatedValueProducts((prevQtd) => !prevQtd);
+  }
+
+  function removeProduct() {
+    if (quantityProducts !== 0) {
+      setQuantityProducts((prevQtd) => +prevQtd - 1);
+      setUpdatedValueProducts((prevQtd) => !prevQtd);
+    }
+  }
+
+  function editProduct({ target }) {
+    const { value } = target;
+    if (value >= 0) {
+      setQuantityProducts(value);
+      setUpdatedValueProducts((prevQtd) => !prevQtd);
+    }
+  }
+
   return (
     <div key={ id }>
       <h3 data-testid={ `customer_products__element-card-title-${id}` }>
@@ -27,19 +69,21 @@ export default function ProductCard({ product }) {
       <button
         type="button"
         data-testid={ `customer_products__button-card-add-item-${id}` }
+        onClick={ () => addProduct() }
       >
         +
 
       </button>
       <input
-        value={ value }
+        value={ quantityProducts }
         type="number"
         data-testid={ `customer_products__input-card-quantity-${id}` }
-        onChange={ handleInputChange }
+        onChange={ (e) => editProduct(e) }
       />
       <button
         type="button"
         data-testid={ `customer_products__button-card-rm-item-${id}` }
+        onClick={ () => removeProduct() }
       >
         -
 
@@ -56,5 +100,3 @@ ProductCard.propTypes = {
     id: PropTypes.number,
   }).isRequired,
 };
-
-// fazer fetch dos produtos que estão em produts no provider antes fazer o endpoint no back
