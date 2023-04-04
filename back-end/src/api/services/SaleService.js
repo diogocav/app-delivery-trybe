@@ -8,7 +8,6 @@ const createNewSale = async ({
     deliveryAddress,
     deliveryNumber,
 }) => {
-    // console.log(deliveryAddress);
     const { dataValues } = await Sale.create({
         userId,
         sellerId,
