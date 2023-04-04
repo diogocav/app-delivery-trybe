@@ -7,4 +7,6 @@ const SaleRouter = express.Router();
 SaleRouter.post('/', tokenValidation, saleController.create);
 // SaleRouter.post('/', saleController.create);
 
+SaleRouter.get('/orders', saleController.getAllSalesUser);
+
 module.exports = SaleRouter;

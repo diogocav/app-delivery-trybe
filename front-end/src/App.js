@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Products from './pages/Products';
 import Checkout from './pages/Checkout';
+import Orders from './pages/Orders';
 import './App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route exact path="/register" component={ Register } />
           <Route exact path="/customer/products" component={ Products } />
           <Route exact path="/customer/checkout" component={ Checkout } />
+          <Route exact path="/customer/orders" component={ Orders } />
           <Route exact path="/">
             <Redirect to="/login" />
           </Route>

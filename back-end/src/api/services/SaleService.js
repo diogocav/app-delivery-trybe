@@ -29,7 +29,15 @@ const createNewSaleProduct = async (saleId, productId, quantity) => {
     });
 };
 
+const getAllSalesByUser = async (userId) => {
+    const sales = await Sale.findAll({
+        where: { userId },
+      });    
+      return sales;
+    };
+
 module.exports = {
     createNewSale,
     createNewSaleProduct,
+    getAllSalesByUser,
 };
