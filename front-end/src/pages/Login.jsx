@@ -1,13 +1,18 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import fetchApi from '../services/fetchApi';
+import Context from '../context/Context';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDisabledLoginError, setIsDisabledLoginError] = useState(false);
   const history = useHistory();
+  const { userInfo } = useContext(Context);
+  useEffect(() => {
+    if (userInfo?.token) history.push('/customer/products');
+  });
   const handleChange = (value, func) => func(value);
   const validateEmail = (emailInput) => {
     const validEmail = /\S+@\S+\.\S+/;
