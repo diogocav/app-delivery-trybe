@@ -5,7 +5,7 @@ import fetchApi from '../services/fetchApi';
 // import Context from '../context/Context';
 
 export default function OrdersDetail() {
-  const [sales, setSales] = useState([]);
+  const [products, setproducts] = useState([]);
   const [userInfo, setUserInfo] = useState();
 
   useEffect(() => {
@@ -14,20 +14,20 @@ export default function OrdersDetail() {
   }, []);
 
   useEffect(() => {
-    async function fetchSales() {
+    async function fetchproducts() {
       const response = await fetchApi('GET', `orders/${userInfo?.id}`, userInfo?.token);
-      setSales(response);
+      setproducts(response);
     }
-    fetchSales();
+    fetchproducts();
   }, [userInfo]);
 
   return (
     <div>
       <NavBar />
-      {sales.map((sale, index) => (
+      {products.map((product, index) => (
         <ProductRow
           key={ index }
-          product={ sale }
+          product={ product }
           index={ index }
         />
       ))}

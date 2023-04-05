@@ -6,6 +6,9 @@ const SaleRouter = express.Router();
 
 SaleRouter.post('/', tokenValidation, saleController.create);
 
-SaleRouter.get('/:userId', saleController.getById);
+SaleRouter.get('/:id', tokenValidation, saleController.getById);
+
+// SaleRouter.get('/details/:id', saleController.getSale);
+SaleRouter.get('/details/:id', tokenValidation, saleController.getSale);
 
 module.exports = SaleRouter;
