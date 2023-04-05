@@ -1,12 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function OrderCard({ order }) {
+export default function OrderCard({ sale }) {
   function formatPrice(price) {
     return price.toString().replace('.', ',');
   }
-  const { id, status, date, price } = order;
-  const formattedPrice = formatPrice(price);
+  function formatDate(date) {
+    const regex = /^(\d{4})-(\d{2})-(\d{2}).*$/;
+    const match = regex.exec(date);
+    const formattedDate = `${match[3]}/${match[2]}/${match[1]}`;
+    return formattedDate;
+  }
+  const { id, status, saleDate, totalPrice } = sale;
+  const formattedPrice = formatPrice(totalPrice);
+  const formattedDate = formatDate(saleDate);
 
   return (
     <button type="button">
@@ -17,7 +24,7 @@ export default function OrderCard({ order }) {
         { status }
       </h2>
       <h3 data-testid={ `customer_orders__element-order-date-${id}` }>
-        { date }
+        { formattedDate }
       </h3>
       <h3 data-testid={ `customer_orders__element-card-price-${id}` }>
         { formattedPrice }
@@ -27,10 +34,10 @@ export default function OrderCard({ order }) {
 }
 
 OrderCard.propTypes = {
-  order: PropTypes.shape({
+  sale: PropTypes.shape({
     id: PropTypes.number,
     status: PropTypes.string,
-    date: PropTypes.string,
-    price: PropTypes.string,
+    saleDate: PropTypes.string,
+    totalPrice: PropTypes.string,
   }).isRequired,
 };
