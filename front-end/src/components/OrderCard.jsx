@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 export default function OrderCard({ sale }) {
+  const history = useHistory();
+
   function formatPrice(price) {
     return price.toString().replace('.', ',');
   }
@@ -15,8 +18,15 @@ export default function OrderCard({ sale }) {
   const formattedPrice = formatPrice(totalPrice);
   const formattedDate = formatDate(saleDate);
 
+  function handleCardButtonClick() {
+    history.push(`/customer/orders/${id}`);
+  }
+
   return (
-    <button type="button">
+    <button
+      type="button"
+      onClick={ handleCardButtonClick }
+    >
       <h3 data-testid={ `customer_orders__element-order-id-${id}` }>
         { `Pedido: ${id}` }
       </h3>
