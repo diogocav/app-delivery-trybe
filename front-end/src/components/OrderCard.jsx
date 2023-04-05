@@ -29,7 +29,7 @@ export default function OrderCard({ sale }) {
   const formattedDate = formatDate(saleDate);
 
   function handleCardButtonClick() {
-    history.push(`/customer/orders/${id}`);
+    history.push(`${path}/${id}`);
   }
 
   return (

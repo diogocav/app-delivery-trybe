@@ -1,53 +1,53 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-export default function ProductRow({ product, index, handleClickRemoveItem = '' }) {
+export default function ProductRow({ product, index, handleClickRemoveItem = () => {} }) {
+  const [dataTestIdUser, setDataTestIdUser] = useState('');
+  const [dataTestidPage, setDataTestidPage] = useState('');
   const { name, quantity, price } = product;
   const history = useHistory();
   const path = history.location.pathname;
-  let dataTestidPage = '';
-  let dataTestidUser = '';
-
-  const pathName = () => {
-    if (path.includes('customer')) dataTestidUser = 'customer';
-    if (path.includes('seller')) dataTestidUser = 'seller';
-    if (path.includes('admin')) dataTestidUser = 'admin';
-
-    dataTestidPage = path === `/${dataTestidUser}/checkout`
-      ? 'checkout'
-      : 'order_details';
-  };
 
   useEffect(() => {
+    const pathName = () => {
+      if (path.includes('customer')) setDataTestIdUser('customer');
+      if (path.includes('seller')) setDataTestIdUser('seller');
+
+      const pageTestId = path === `/${dataTestIdUser}/checkout`
+        ? 'checkout'
+        : 'order_details';
+
+      setDataTestidPage(pageTestId);
+    };
     pathName();
-  }, []);
+  }, [path, dataTestIdUser]);
   return (
     <tr>
       <td
         data-testid={
-          `${dataTestidUser}_${dataTestidPage}__element-order-table-item-number-${index}`
+          `${dataTestIdUser}_${dataTestidPage}__element-order-table-item-number-${index}`
         }
       >
         {+index + 1}
       </td>
       <td
         data-testid={
-          `${dataTestidUser}_${dataTestidPage}__element-order-table-name-${index}`
+          `${dataTestIdUser}_${dataTestidPage}__element-order-table-name-${index}`
         }
       >
         {name}
       </td>
       <td
         data-testid={
-          `${dataTestidUser}_${dataTestidPage}__element-order-table-quantity-${index}`
+          `${dataTestIdUser}_${dataTestidPage}__element-order-table-quantity-${index}`
         }
       >
         {+quantity}
       </td>
       <td
         data-testid={
-          `${dataTestidUser}_${dataTestidPage}__element-order-table-unit-price-${index}`
+          `${dataTestIdUser}_${dataTestidPage}__element-order-table-unit-price-${index}`
         }
       >
         {price.toString()
@@ -55,7 +55,7 @@ export default function ProductRow({ product, index, handleClickRemoveItem = '' 
       </td>
       <td
         data-testid={
-          `${dataTestidUser}_${dataTestidPage}__element-order-table-sub-total-${index}`
+          `${dataTestIdUser}_${dataTestidPage}__element-order-table-sub-total-${index}`
         }
       >
         {(+price * +quantity).toFixed(2)
@@ -64,7 +64,7 @@ export default function ProductRow({ product, index, handleClickRemoveItem = '' 
       </td>
       <td
         data-testid={
-          `${dataTestidUser}_${dataTestidPage}__element-order-table-remove-${index}`
+          `${dataTestIdUser}_${dataTestidPage}__element-order-table-remove-${index}`
         }
       >
         { path === '/customer/checkout'
@@ -87,5 +87,9 @@ ProductRow.propTypes = {
     quantity: PropTypes.number,
   }).isRequired,
   index: PropTypes.number.isRequired,
-  handleClickRemoveItem: PropTypes.func.isRequired,
+  handleClickRemoveItem: PropTypes.func,
+};
+
+ProductRow.defaultProps = {
+  handleClickRemoveItem: () => {},
 };

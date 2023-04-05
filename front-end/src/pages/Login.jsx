@@ -19,11 +19,14 @@ export default function Login() {
     const validEmail = /\S+@\S+\.\S+/;
     return validEmail.test(emailInput);
   };
+
   const validatePassword = (passwordInput) => {
     const minPasswordLength = 6;
     return passwordInput.length >= minPasswordLength;
   };
+
   const validateLogin = () => validateEmail(email) && validatePassword(password);
+
   const handleClickLogin = useCallback(async () => {
     const result = await fetchApi('POST', 'login', '', { email, password });
     if (result.message !== undefined) setIsDisabledLoginError(true);
@@ -32,8 +35,14 @@ export default function Login() {
       const decoded = jwtDecode(token);
       localStorage.setItem('user', JSON.stringify({
         ...decoded.data,
-        token }));
-      history.push('/customer/products');
+        token,
+      }));
+      if (decoded.data.role === 'customer') {
+        history.push('/customer/products');
+      }
+      if (decoded.data.role === 'seller') {
+        history.push('/seller/orders');
+      }
     }
   }, [setIsDisabledLoginError, email, password, history]);
   return (
