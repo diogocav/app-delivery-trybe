@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
 export default function OrderCard({ sale }) {
   const history = useHistory();
   const path = history.location.pathname;
-  let dataTestIdUser = '';
-
-  const pathName = () => {
-    if (path.includes('customer')) dataTestIdUser = 'customer';
-    if (path.includes('seller')) dataTestIdUser = 'seller';
-  };
+  const [dataTestIdUser, setDataTestIdUser] = useState();
 
   useEffect(() => {
+    const pathName = () => {
+      if (path.includes('customer')) setDataTestIdUser('customer');
+      if (path.includes('seller')) setDataTestIdUser('seller');
+    };
     pathName();
-  }, []);
+  }, [path]);
 
   function formatPrice(price) {
     return price.toString().replace('.', ',');

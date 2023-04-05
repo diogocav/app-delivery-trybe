@@ -20,6 +20,8 @@ export default function Products() {
     fetchSales();
   }, [userInfo]);
 
+  console.log(sales);
+
   return (
     <div>
       <NavBar />
