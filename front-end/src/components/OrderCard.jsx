@@ -4,6 +4,17 @@ import { useHistory } from 'react-router-dom';
 
 export default function OrderCard({ sale }) {
   const history = useHistory();
+  const path = history.location.pathname;
+  let dataTestIdUser = '';
+
+  const pathName = () => {
+    if (path.includes('customer')) dataTestIdUser = 'customer';
+    if (path.includes('seller')) dataTestIdUser = 'seller';
+  };
+
+  useEffect(() => {
+    pathName();
+  }, []);
 
   function formatPrice(price) {
     return price.toString().replace('.', ',');
@@ -27,16 +38,16 @@ export default function OrderCard({ sale }) {
       type="button"
       onClick={ handleCardButtonClick }
     >
-      <h3 data-testid={ `customer_orders__element-order-id-${id}` }>
+      <h3 data-testid={ `${dataTestIdUser}_orders__element-order-id-${id}` }>
         { `Pedido: ${id}` }
       </h3>
-      <h2 data-testid={ `customer_orders__element-delivery-status-${id}` }>
+      <h2 data-testid={ `${dataTestIdUser}_orders__element-delivery-status-${id}` }>
         { status }
       </h2>
-      <h3 data-testid={ `customer_orders__element-order-date-${id}` }>
+      <h3 data-testid={ `${dataTestIdUser}_orders__element-order-date-${id}` }>
         { formattedDate }
       </h3>
-      <h3 data-testid={ `customer_orders__element-card-price-${id}` }>
+      <h3 data-testid={ `${dataTestIdUser}_orders__element-card-price-${id}` }>
         { formattedPrice }
       </h3>
     </button>
