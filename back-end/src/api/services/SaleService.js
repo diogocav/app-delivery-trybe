@@ -66,9 +66,20 @@ const getSale = async (id) => {
     return sale;
 };
 
+const update = async (id, newStatus) => {
+  const [affectedCount] = await Sale.update(
+    { status: newStatus },
+    { where: { id } },
+  );
+
+  console.log(affectedCount);
+  return affectedCount;
+};
+
 module.exports = {
     createNewSale,
     createNewSaleProduct,
     getAllSales,
     getSale,
+    update,
 };

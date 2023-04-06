@@ -37,8 +37,20 @@ const getSale = async (req, res) => {
   return res.status(200).json(sale);
 };
 
+const update = async (req, res) => {
+  const { id } = req.params;
+  const newStatus = req.body.status;
+
+  const updatedSale = await saleService.update(id, newStatus);
+
+  if (updatedSale !== 0) return res.status(200).json({ message: 'Finished' });
+  
+  return res.status(500).json({ message: 'Unable to perform task' });
+};
+
 module.exports = {
     create,
     getById,
     getSale,
+    update,
 };
