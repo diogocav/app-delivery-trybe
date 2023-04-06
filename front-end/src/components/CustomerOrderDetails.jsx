@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import fetchApi from '../services/fetchApi';
+import { formatDate } from '../helpers/formatNumbers';
+// import fetchApi from '../services/fetchApi';
+// import handleStatusChange from '../helpers/handleStatusChange';
+/* import { formatDate } from '../helpers/formatNumbers';  */
 
 export default function CustomerOrderDetails({ saleInfo, name }) {
-  // const [sellerName, setSellerName] = useState([]);
-  // const [checker, setChecker] = useState(true);
-  const { id, status, saleDate, sellerId } = saleInfo;
+  const { id, status, saleDate } = saleInfo;
+  // const [userInfo, setUserInfo] = useState();
 
-  // const getSellerName = async (Sellerid) => {
-  //   const result = await fetchApi(
-  //     'GET',
-  //     `users/seller/${Sellerid}`,
+  // async function handleStatusChange(saleId, token, newStatus) {
+  //   const response = await fetchApi(
+  //     'PUT',
+  //     `sale/${saleId}`,
+  //     token,
+  //     { status: newStatus },
   //   );
-  //   console.log(result);
-  //   setSellerName(result.name);
-  // };
+  //   return response;
+  // }
 
   // useEffect(() => {
-  //   if (sellerId !== undefined && checker) {
-  //     console.log('fetch customer oder detail');
-  //     getSellerName(sellerId);
-  //     setChecker(false);
-  //   }
-  // }, [sellerId, checker]);
+  //   const data = JSON.parse(localStorage.getItem('user')) || '';
+  //   setUserInfo(data);
+  // }, []);
 
   return (
     <header>
       <h2
-        data-testid={ `customer_order_details__element-order-details-label-order-${id}` }
+        data-testid="customer_order_details__element-order-details-label-order-id"
       >
         {id}
       </h2>
@@ -42,8 +42,9 @@ export default function CustomerOrderDetails({ saleInfo, name }) {
       <h2
         data-testid="customer_order_details__element-order-details-label-order-date"
       >
-        {saleDate}
-
+        {
+          saleDate ? formatDate(saleDate) : ''
+        }
       </h2>
       <h2
         data-testid={
@@ -57,7 +58,7 @@ export default function CustomerOrderDetails({ saleInfo, name }) {
         type="button"
         disabled
         data-testid="customer_order_details__button-delivery-check"
-        // onClick={}
+        // onClick={ () => handleStatusChange(id, userInfo.token, 'Entregue') }
       >
         Marcar como entregue
       </button>
@@ -78,4 +79,6 @@ CustomerOrderDetails.propTypes = {
     saleDate: PropTypes.string,
     sellerId: PropTypes.number,
   }).isRequired,
+  name: PropTypes.string.isRequired,
+
 };

@@ -5,17 +5,29 @@ import ProductRow from '../components/ProductRow';
 import fetchApi from '../services/fetchApi';
 import CustomerOrderDetails from '../components/CustomerOrderDetails';
 import SellerOrderDetails from '../components/SellerOrderDetails';
-import ShoppingCart from '../components/ShoppingCart';
 
 export default function OrdersDetail() {
   const [productsArray, setproductsArray] = useState([]);
   const [saleInfo, setSaleInfo] = useState({});
+  const [totalPrice, setTotalPrice] = useState(0);
   const [userInfo] = useState(JSON
     .parse(localStorage.getItem('user')) || '');
   const [sellerName, setSellerName] = useState([]);
   const history = useHistory();
   const path = history.location.pathname;
   const pathArray = path.split('/');
+
+  function getTotalOrderValue(products) {
+    const total = products
+      .reduce((acc, curr) => {
+        const { SaleProduct: { quantity }, price } = curr;
+        return acc + (price * quantity);
+      }, 0)
+      .toFixed(2)
+      .toString()
+      .replace('.', ',');
+    setTotalPrice(total);
+  }
 
   useEffect(() => {
     async function fetchproducts() {
@@ -25,14 +37,13 @@ export default function OrdersDetail() {
         userInfo.token,
       );
       const { products } = response;
-      console.log('fetchproducts', response);
       setSaleInfo(response);
       setproductsArray(products);
+      getTotalOrderValue(products);
     }
 
     if (userInfo !== undefined) {
       fetchproducts();
-      console.log('undefined fetch products');
     }
   }, [userInfo]);
 
@@ -43,10 +54,8 @@ export default function OrdersDetail() {
         `users/seller/${sellerId}`,
       );
       setSellerName(result?.name);
-      console.log('getSeller', result);
     }
     if (saleInfo !== undefined) {
-      console.log('undefined getseller');
       getSellerName(saleInfo);
     }
   }, [saleInfo]);
@@ -91,7 +100,11 @@ export default function OrdersDetail() {
           })}
         </tbody>
       </table>
-      <ShoppingCart />
+      <div data-testid={ `${pathArray[1]}_order_details__element-order-total-price` }>
+        {
+          totalPrice
+        }
+      </div>
     </div>
   );
 }
