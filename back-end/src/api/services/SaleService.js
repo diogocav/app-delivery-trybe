@@ -72,7 +72,6 @@ const update = async (id, newStatus) => {
     { where: { id } },
   );
 
-  console.log(affectedCount);
   return affectedCount;
 };
 

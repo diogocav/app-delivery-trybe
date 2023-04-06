@@ -28,7 +28,7 @@ export default function NavBar() {
         <li
           data-testid="customer_products__element-navbar-link-orders"
         >
-          <Link to="/customer/orders"> Meus Pedidos</Link>
+          <Link to={ `/${userInfo?.role}/orders` }> Meus Pedidos</Link>
         </li>
         <li
           data-testid="customer_products__element-navbar-user-full-name"
