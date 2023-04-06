@@ -8,7 +8,8 @@ SaleRouter.post('/', tokenValidation, saleController.create);
 
 SaleRouter.get('/:id', tokenValidation, saleController.getById);
 
-// SaleRouter.get('/details/:id', saleController.getSale);
 SaleRouter.get('/details/:id', tokenValidation, saleController.getSale);
+
+SaleRouter.post('/:id', tokenValidation, saleController.update);
 
 module.exports = SaleRouter;
