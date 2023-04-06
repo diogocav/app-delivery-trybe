@@ -1,28 +1,32 @@
-import React, { useState, useCallback, useEffect, useContext } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import fetchApi from '../services/fetchApi';
-import Context from '../context/Context';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isDisabledLoginError, setIsDisabledLoginError] = useState(false);
   const history = useHistory();
-  const { userInfo } = useContext(Context);
+
   useEffect(() => {
-    if (userInfo?.token) history.push('/customer/products');
-  });
+    const data = JSON.parse(localStorage.getItem('user')) || '';
+    if (data?.token) history.push('/customer/products');
+  }, [history]);
+
   const handleChange = (value, func) => func(value);
   const validateEmail = (emailInput) => {
     const validEmail = /\S+@\S+\.\S+/;
     return validEmail.test(emailInput);
   };
+
   const validatePassword = (passwordInput) => {
     const minPasswordLength = 6;
     return passwordInput.length >= minPasswordLength;
   };
+
   const validateLogin = () => validateEmail(email) && validatePassword(password);
+
   const handleClickLogin = useCallback(async () => {
     const result = await fetchApi('POST', 'login', '', { email, password });
     if (result.message !== undefined) setIsDisabledLoginError(true);
@@ -31,8 +35,14 @@ export default function Login() {
       const decoded = jwtDecode(token);
       localStorage.setItem('user', JSON.stringify({
         ...decoded.data,
-        token }));
-      history.push('/customer/products');
+        token,
+      }));
+      if (decoded.data.role === 'customer') {
+        history.push('/customer/products');
+      }
+      if (decoded.data.role === 'seller') {
+        history.push('/seller/orders');
+      }
     }
   }, [setIsDisabledLoginError, email, password, history]);
   return (

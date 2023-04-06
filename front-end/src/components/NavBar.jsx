@@ -1,10 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Context from '../context/Context';
 
 export default function NavBar() {
-  const { userInfo, setUserInfo } = useContext(Context);
-  const { name } = userInfo;
+  const [userInfo, setUserInfo] = useState();
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('user')) || '';
+    setUserInfo(data);
+  }, []);
 
   function logOut() {
     localStorage.removeItem('user');
@@ -14,11 +17,14 @@ export default function NavBar() {
   return (
     <nav>
       <ul>
-        <li
-          data-testid="customer_products__element-navbar-link-products"
-        >
-          <Link to="/customer/products"> Produtos</Link>
-        </li>
+        {
+          (userInfo?.role === 'customer')
+          && (
+            <li data-testid="customer_products__element-navbar-link-products">
+              <Link to="/customer/products"> Produtos</Link>
+            </li>
+          )
+        }
         <li
           data-testid="customer_products__element-navbar-link-orders"
         >
@@ -27,7 +33,7 @@ export default function NavBar() {
         <li
           data-testid="customer_products__element-navbar-user-full-name"
         >
-          {name}
+          {userInfo?.name}
         </li>
         <li>
           <Link

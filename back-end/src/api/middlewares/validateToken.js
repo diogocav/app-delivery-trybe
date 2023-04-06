@@ -20,6 +20,8 @@ const tokenValidation = async (req, res, next) => {
         return res.status(401).json({ message: 'Token must be a valid token' });
       }
 
+      req.role = user.role;
+
       next();
     } catch (err) { return res.status(401).json({ message: 'Token must be a valid token' }); }
   };
