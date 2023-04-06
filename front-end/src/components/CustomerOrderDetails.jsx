@@ -2,24 +2,27 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import fetchApi from '../services/fetchApi';
 
-export default function CustomerOrderDetails({ saleInfo }) {
-  const [sellerName, setSellerName] = useState([]);
+export default function CustomerOrderDetails({ saleInfo, name }) {
+  // const [sellerName, setSellerName] = useState([]);
+  // const [checker, setChecker] = useState(true);
   const { id, status, saleDate, sellerId } = saleInfo;
 
-  const getSellerName = async (Sellerid) => {
-    const result = await fetchApi(
-      'GET',
-      `users/seller/${Sellerid}`,
-    );
-    console.log(result);
-    setSellerName(result.name);
-  };
+  // const getSellerName = async (Sellerid) => {
+  //   const result = await fetchApi(
+  //     'GET',
+  //     `users/seller/${Sellerid}`,
+  //   );
+  //   console.log(result);
+  //   setSellerName(result.name);
+  // };
 
-  useEffect(() => {
-    if (sellerId !== undefined) {
-      getSellerName(sellerId);
-    }
-  }, [sellerId]);
+  // useEffect(() => {
+  //   if (sellerId !== undefined && checker) {
+  //     console.log('fetch customer oder detail');
+  //     getSellerName(sellerId);
+  //     setChecker(false);
+  //   }
+  // }, [sellerId, checker]);
 
   return (
     <header>
@@ -32,7 +35,7 @@ export default function CustomerOrderDetails({ saleInfo }) {
       <h2
         data-testid="customer_order_details__element-order-details-label-seller-name"
       >
-        {sellerName}
+        {name}
 
       </h2>
 

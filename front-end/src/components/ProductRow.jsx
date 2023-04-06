@@ -14,7 +14,7 @@ export default function ProductRow({ product, index, handleClickRemoveItem = () 
       if (path.includes('customer')) setDataIdUser('customer');
       if (path.includes('seller')) setDataIdUser('seller');
 
-      const pageTestId = path === `/${setDataIdUser}/checkout`
+      const pageTestId = path === `/${dataIdUser}/checkout`
         ? 'checkout'
         : 'order_details';
 

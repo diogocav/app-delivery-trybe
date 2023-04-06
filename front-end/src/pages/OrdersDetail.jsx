@@ -10,15 +10,12 @@ import ShoppingCart from '../components/ShoppingCart';
 export default function OrdersDetail() {
   const [productsArray, setproductsArray] = useState([]);
   const [saleInfo, setSaleInfo] = useState({});
-  const [userInfo, setUserInfo] = useState();
+  const [userInfo] = useState(JSON
+    .parse(localStorage.getItem('user')) || '');
+  const [sellerName, setSellerName] = useState([]);
   const history = useHistory();
   const path = history.location.pathname;
   const pathArray = path.split('/');
-
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('user')) || '';
-    setUserInfo(data);
-  }, []);
 
   useEffect(() => {
     async function fetchproducts() {
@@ -28,21 +25,41 @@ export default function OrdersDetail() {
         userInfo.token,
       );
       const { products } = response;
+      console.log('fetchproducts', response);
       setSaleInfo(response);
       setproductsArray(products);
     }
 
     if (userInfo !== undefined) {
       fetchproducts();
+      console.log('undefined fetch products');
     }
-  }, [userInfo, pathArray]);
+  }, [userInfo]);
+
+  useEffect(() => {
+    async function getSellerName({ sellerId }) {
+      const result = await fetchApi(
+        'GET',
+        `users/seller/${sellerId}`,
+      );
+      setSellerName(result?.name);
+      console.log('getSeller', result);
+    }
+    if (saleInfo !== undefined) {
+      console.log('undefined getseller');
+      getSellerName(saleInfo);
+    }
+  }, [saleInfo]);
 
   return (
     <div>
       <NavBar />
       {
-        pathArray[1] === 'customer'
-          ? <CustomerOrderDetails saleInfo={ saleInfo } index={ saleInfo.index } />
+        pathArray[1] === 'customer' ? <CustomerOrderDetails
+          saleInfo={ saleInfo }
+          name={ sellerName }
+          index={ saleInfo.index }
+        />
           : <SellerOrderDetails saleInfo={ saleInfo } index={ saleInfo.index } />
       }
       <table>
@@ -78,3 +95,134 @@ export default function OrdersDetail() {
     </div>
   );
 }
+
+// useEffect(() => {
+//   const data = JSON.parse(localStorage.getItem('user')) || '';
+//   setUserInfo(data);
+// }, []);
+
+// CODIGO DO NATO --------------------------
+
+// useEffect(() => {
+//   async function fetchproducts() {
+//     const response = await fetchApi(
+//       'GET',
+//       `orders/details/${pathArray[3]}`,
+//       userInfo.token,
+//     );
+//     const { products } = response;
+//     console.log('fetchproducts', response);
+//     setSaleInfo(response);
+//     setproductsArray(products);
+//   }
+//   async function getSellerName({ sellerId }) {
+//     const result = await fetchApi(
+//       'GET',
+//       `users/seller/${sellerId}`,
+//     );
+//     console.log('getsellername', result);
+//     setSellerName(result?.name);
+//   }
+
+//   if (userInfo !== undefined) {
+//     console.log('fetchproducts');
+//     fetchproducts();
+//   }
+//   if (saleInfo !== undefined) {
+//     console.log('getSeller');
+//     getSellerName(saleInfo);
+//   }
+// }, [userInfo]);
+
+// ------------------- monitoria
+
+// useEffect(() => {
+//   async function fetchproducts() {
+//     const response = await fetchApi(
+//       'GET',
+//       `orders/details/${pathArray[3]}`,
+//       userInfo.token,
+//     );
+//     const { products } = response;
+//     setSaleInfo(response);
+//     setproductsArray(products);
+//   }
+
+//   if (userInfo !== undefined) {
+//     console.log("fetchproducts");
+//     fetchproducts();
+//     // setIsMounted(false);
+//   }
+// }, [userInfo, pathArray]);
+
+// useEffect(() => {
+//   async function getSellerName({ sellerId }) {
+//     const result = await fetchApi(
+//       'GET',
+//       `users/seller/${sellerId}`,
+//     );
+//     setSellerName(result.name);
+//   }
+//   if (saleInfo !== undefined) {
+//     console.log("getSeller");
+//     getSellerName(saleInfo);
+//   }
+// }, [saleInfo]);
+
+// CODIGO DO CHAT --------------------------------------------
+
+// useEffect(() => {
+//   const data = JSON.parse(localStorage.getItem('user')) || '';
+//   setUserInfo(data);
+// }, []);
+
+// useEffect(() => {
+//   async function fetchproducts() {
+//     if (!userInfo || !pathArray) {
+//       return;
+//     }
+
+//     const response = await fetchApi(
+//       'GET',
+//       `orders/details/${pathArray[3]}`,
+//       userInfo.token,
+//     );
+
+//     if (!isMounted) {
+//       return;
+//     }
+
+//     const { products } = response;
+//     setSaleInfo(response);
+//     setproductsArray(products);
+//   }
+
+//   if (userInfo !== undefined) {
+//     console.log("getSeller");
+
+//     fetchproducts();
+//   }
+
+//   return () => {
+//     setIsMounted(false);
+//   };
+// }, [userInfo, pathArray]);
+
+// useEffect(() => {
+//   async function getSellerName({ sellerId }) {
+//     const result = await fetchApi(
+//       'GET',
+//       `users/seller/${sellerId}`,
+//     );
+//     setSellerName(result?.name);
+//   }
+//   if (saleInfo !== undefined) {
+//     console.log("getSeller");
+
+//     getSellerName(saleInfo);
+//   }
+
+//   return () => {
+//     setIsMounted(false);
+//   };
+// }, [saleInfo]);
