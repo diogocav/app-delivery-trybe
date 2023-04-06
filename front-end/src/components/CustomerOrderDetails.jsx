@@ -1,44 +1,78 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import fetchApi from '../services/fetchApi';
 
-export default function SellerOrderDetails(saleInfo) {
-  const [seller, setSeller] = useState({});
-  const { id, status, saleDate } = saleInfo;
+export default function CustomerOrderDetails({ saleInfo }) {
+  const [sellerName, setSellerName] = useState([]);
+  const { id, status, saleDate, sellerId } = saleInfo;
 
-  const getSeller = async (sellerId) => {
+  const getSellerName = async (Sellerid) => {
     const result = await fetchApi(
       'GET',
-      `users/seller${sellerId}`,
+      `users/seller/${Sellerid}`,
     );
-    setSeller(result);
+    console.log(result);
+    setSellerName(result.name);
   };
 
   useEffect(() => {
-    const { sellerId } = saleInfo;
-    getSeller(sellerId);
-  }, []);
+    if (sellerId !== undefined) {
+      getSellerName(sellerId);
+    }
+  }, [sellerId]);
 
   return (
     <header>
-      <h2>
-        PEDIDO:
-        {' '}
+      <h2
+        data-testid={ `customer_order_details__element-order-details-label-order-${id}` }
+      >
         {id}
       </h2>
-      <h2>{seller.name}</h2>
-      <h2>{saleDate}</h2>
-      <h2>{status}</h2>
+
+      <h2
+        data-testid="customer_order_details__element-order-details-label-seller-name"
+      >
+        {sellerName}
+
+      </h2>
+
+      <h2
+        data-testid="customer_order_details__element-order-details-label-order-date"
+      >
+        {saleDate}
+
+      </h2>
+      <h2
+        data-testid={
+          `customer_order_details__element-order-details-label-delivery-status${id}`
+        }
+      >
+        {status}
+
+      </h2>
       <button
+        type="button"
+        disabled
+        data-testid="customer_order_details__button-delivery-check"
+        // onClick={}
+      >
+        Marcar como entregue
+      </button>
+      {/*  <button
         type="button"
         // onClick={}
       >
-        Preparar Pedido
-      </button>
-      <button
-        type="button"
-        // onClick={}
-      >
-        Saiu para Entrega
-      </button>
+        Marcar como entregue
+      </button> */}
     </header>
   );
 }
+
+CustomerOrderDetails.propTypes = {
+  saleInfo: PropTypes.shape({
+    id: PropTypes.number,
+    status: PropTypes.string,
+    saleDate: PropTypes.string,
+    sellerId: PropTypes.number,
+  }).isRequired,
+};

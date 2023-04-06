@@ -5,6 +5,7 @@ import ProductRow from '../components/ProductRow';
 import fetchApi from '../services/fetchApi';
 import CustomerOrderDetails from '../components/CustomerOrderDetails';
 import SellerOrderDetails from '../components/SellerOrderDetails';
+import ShoppingCart from '../components/ShoppingCart';
 
 export default function OrdersDetail() {
   const [productsArray, setproductsArray] = useState([]);
@@ -40,9 +41,9 @@ export default function OrdersDetail() {
     <div>
       <NavBar />
       {
-        pathArray[1] === 'seller'
-          ? <CustomerOrderDetails sale={ saleInfo } />
-          : <SellerOrderDetails sale={ saleInfo } />
+        pathArray[1] === 'customer'
+          ? <CustomerOrderDetails saleInfo={ saleInfo } index={ saleInfo.index } />
+          : <SellerOrderDetails saleInfo={ saleInfo } index={ saleInfo.index } />
       }
       <table>
         <thead>
@@ -73,7 +74,7 @@ export default function OrdersDetail() {
           })}
         </tbody>
       </table>
-
+      <ShoppingCart />
     </div>
   );
 }
