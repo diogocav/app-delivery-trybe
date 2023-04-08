@@ -6,7 +6,7 @@ const SaleRouter = express.Router();
 
 SaleRouter.post('/', tokenValidation, saleController.create);
 
-SaleRouter.get('/:id', tokenValidation, saleController.getById);
+SaleRouter.get('/:id', tokenValidation, saleController.getAllSalesById);
 
 SaleRouter.get('/details/:id', tokenValidation, saleController.getSale);
 

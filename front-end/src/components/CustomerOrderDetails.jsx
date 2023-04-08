@@ -1,28 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { formatDate } from '../helpers/formatNumbers';
 // import fetchApi from '../services/fetchApi';
-// import handleStatusChange from '../helpers/handleStatusChange';
+import handleStatusChange from '../helpers/handleStatusChange';
 /* import { formatDate } from '../helpers/formatNumbers';  */
 
 export default function CustomerOrderDetails({ saleInfo, name }) {
   const { id, status, saleDate } = saleInfo;
-  // const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = useState();
+  const [statusBack, setStatusBack] = useState();
 
-  // async function handleStatusChange(saleId, token, newStatus) {
-  //   const response = await fetchApi(
-  //     'PUT',
-  //     `sale/${saleId}`,
-  //     token,
-  //     { status: newStatus },
-  //   );
-  //   return response;
-  // }
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('user')) || '';
+    setUserInfo(data);
+    console.log('dnadlksd', data);
+    async function fetchData(token) {
+      console.log(token);
+      const updatedStatus = await GetOrderStatus(id, token);
+      setStatusBack(updatedStatus.status);
+    }
+    fetchData(data.token);
+  }, [id]);
 
   // useEffect(() => {
-  //   const data = JSON.parse(localStorage.getItem('user')) || '';
-  //   setUserInfo(data);
-  // }, []);
+
+  // }, [id, userInfo]);
 
   return (
     <header>
@@ -56,9 +58,9 @@ export default function CustomerOrderDetails({ saleInfo, name }) {
       </h2>
       <button
         type="button"
-        disabled
+        disabled={ statusBack !== 'Em Trânsito' }
         data-testid="customer_order_details__button-delivery-check"
-        // onClick={ () => handleStatusChange(id, userInfo.token, 'Entregue') }
+        onClick={ () => handleStatusChange(id, userInfo.token, 'Entregue') }
       >
         Marcar como entregue
       </button>

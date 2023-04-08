@@ -1,27 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-// import handleStatusChange from '../helpers/handleStatusChange';
+import handleStatusChange from '../helpers/handleStatusChange';
 // import fetchApi from '../services/fetchApi';
 import { formatDate } from '../helpers/formatNumbers';
+import GetOrderStatus from '../helpers/GetOrderStatus';
+// import GetOrderStatus from '../helpers/GetOrderStatus';
 
 export default function SellerOrderDetails({ saleInfo }) {
   const { id, status, saleDate } = saleInfo;
-  // const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = useState();
+  const [statusBack, setStatusBack] = useState();
 
-  // async function handleStatusChange(saleId, token, newStatus) {
-  //   const response = await fetchApi(
-  //     'PUT',
-  //     `sale/${saleId}`,
-  //     token,
-  //     { status: newStatus },
-  //   );
-  //   return response;
-  // }
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('user')) || '';
+    setUserInfo(data);
+    async function fetchData(token) {
+      const updatedStatus = await GetOrderStatus(id, token);
+      console.log(updatedStatus, id);
+      setStatusBack(updatedStatus.status);
+    }
 
-  // useEffect(() => {
-  //   const data = JSON.parse(localStorage.getItem('user')) || '';
-  //   setUserInfo(data);
-  // }, []);
+    if (id) fetchData(data.token);
+  }, [id]);
 
   return (
     <header>
@@ -47,15 +47,16 @@ export default function SellerOrderDetails({ saleInfo }) {
       <button
         data-testid="seller_order_details__button-preparing-check"
         type="button"
-        // onClick={ () => handleStatusChange(id, userInfo.token, 'Preparando') }
+        onClick={ () => handleStatusChange(id, userInfo.token, 'Preparando') }
+        disabled={ statusBack !== 'Pendente' }
       >
         Preparar Pedido
       </button>
       <button
         data-testid="seller_order_details__button-dispatch-check"
-        disabled
+        disabled={ statusBack !== 'Preparando' }
         type="button"
-        // onClick={ () => handleStatusChange(id, userInfo.token, 'Em Trânsito') }
+        onClick={ () => handleStatusChange(id, userInfo.token, 'Em Trânsito') }
       >
         Saiu para Entrega
       </button>
