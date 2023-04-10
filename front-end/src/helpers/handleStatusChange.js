@@ -7,5 +7,6 @@ export default async function handleStatusChange(saleId, token, status) {
     token,
     { status },
   );
+  /*  window.location.reload(); */
   return response;
 }
