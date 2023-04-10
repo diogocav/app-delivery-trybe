@@ -12,7 +12,7 @@ export default function OrdersDetail() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [userInfo] = useState(JSON
     .parse(localStorage.getItem('user')) || '');
-  const [sellerName, setSellerName] = useState([]);
+  const [sellerName, setSellerName] = useState('');
   const history = useHistory();
   const path = history.location.pathname;
   const pathArray = path.split('/');

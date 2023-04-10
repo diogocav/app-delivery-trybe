@@ -30,7 +30,7 @@ const createNewSaleProduct = async (saleId, productId, quantity) => {
     });
 };
 
-const getAllSales = async (id, role) => {
+const getAllSalesById = async (id, role) => {
     if (role === 'customer') {
         const sales = await Sale.findAll({
             where: { userId: id },
@@ -71,14 +71,14 @@ const update = async (id, newStatus) => {
     { status: newStatus },
     { where: { id } },
   );
-
+ console.log('service', affectedCount);
   return affectedCount;
 };
 
 module.exports = {
     createNewSale,
     createNewSaleProduct,
-    getAllSales,
+    getAllSalesById,
     getSale,
     update,
 };

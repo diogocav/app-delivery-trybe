@@ -20,15 +20,27 @@ export default function NavBar() {
         {
           (userInfo?.role === 'customer')
           && (
-            <li data-testid="customer_products__element-navbar-link-products">
-              <Link to="/customer/products"> Produtos</Link>
+            <li>
+              <Link
+                to="/customer/products"
+                data-testid="customer_products__element-navbar-link-products"
+              >
+                {' '}
+                Produtos
+
+              </Link>
             </li>
           )
         }
-        <li
-          data-testid="customer_products__element-navbar-link-orders"
-        >
-          <Link to={ `/${userInfo?.role}/orders` }> Meus Pedidos</Link>
+        <li>
+          <Link
+            to={ `/${userInfo?.role}/orders` }
+            data-testid="customer_products__element-navbar-link-orders"
+          >
+            {' '}
+            Meus Pedidos
+
+          </Link>
         </li>
         <li
           data-testid="customer_products__element-navbar-user-full-name"

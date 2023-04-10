@@ -1,28 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+// import { useHistory } from 'react-router-dom';
 import { formatDate } from '../helpers/formatNumbers';
-// import fetchApi from '../services/fetchApi';
-// import handleStatusChange from '../helpers/handleStatusChange';
-/* import { formatDate } from '../helpers/formatNumbers';  */
+import handleStatusChange from '../helpers/handleStatusChange';
+import GetOrderStatus from '../helpers/GetOrderStatus';
 
 export default function CustomerOrderDetails({ saleInfo, name }) {
-  const { id, status, saleDate } = saleInfo;
-  // const [userInfo, setUserInfo] = useState();
+  const { id, saleDate } = saleInfo;
+  // const history = useHistory();
+  const [userInfo, setUserInfo] = useState();
+  const [statusBack, setStatusBack] = useState();
 
-  // async function handleStatusChange(saleId, token, newStatus) {
-  //   const response = await fetchApi(
-  //     'PUT',
-  //     `sale/${saleId}`,
-  //     token,
-  //     { status: newStatus },
-  //   );
-  //   return response;
-  // }
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('user')) || '';
+    setUserInfo(data);
+    // console.log('dnadlksd', data);
 
-  // useEffect(() => {
-  //   const data = JSON.parse(localStorage.getItem('user')) || '';
-  //   setUserInfo(data);
-  // }, []);
+    async function fetchData(token) {
+      // console.log(token);
+      const updatedStatus = await GetOrderStatus(id, token);
+      // console.log(updatedStatus);
+      setStatusBack(updatedStatus.status);
+    }
+
+    if (id) fetchData(data.token);
+  }, [id]);
+
+  useEffect(() => {
+  }, [statusBack]);
+
+  async function reload(stattus) {
+    handleStatusChange(id, userInfo.token, stattus);
+    const updatedStatus = await GetOrderStatus(id, userInfo.token);
+    setStatusBack(updatedStatus.status);
+    // history.push('/customer/orders');
+  }
 
   return (
     <header>
@@ -51,14 +63,15 @@ export default function CustomerOrderDetails({ saleInfo, name }) {
           `customer_order_details__element-order-details-label-delivery-status${id}`
         }
       >
-        {status}
+        {statusBack}
 
       </h2>
       <button
-        type="button"
-        disabled
         data-testid="customer_order_details__button-delivery-check"
+        type="button"
+        disabled={ statusBack !== 'Em Trânsito' }
         // onClick={ () => handleStatusChange(id, userInfo.token, 'Entregue') }
+        onClick={ () => reload('Entregue') }
       >
         Marcar como entregue
       </button>
@@ -79,6 +92,9 @@ CustomerOrderDetails.propTypes = {
     saleDate: PropTypes.string,
     sellerId: PropTypes.number,
   }).isRequired,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
+};
 
+CustomerOrderDetails.defaultProps = {
+  name: '',
 };
