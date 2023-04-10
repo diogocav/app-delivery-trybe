@@ -1,30 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+// import { useHistory } from 'react-router-dom';
 import { formatDate } from '../helpers/formatNumbers';
 import handleStatusChange from '../helpers/handleStatusChange';
 import GetOrderStatus from '../helpers/GetOrderStatus';
 
 export default function CustomerOrderDetails({ saleInfo, name }) {
-  const { id, status, saleDate } = saleInfo;
+  const { id, saleDate } = saleInfo;
+  // const history = useHistory();
   const [userInfo, setUserInfo] = useState();
   const [statusBack, setStatusBack] = useState();
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('user')) || '';
     setUserInfo(data);
-    console.log('dnadlksd', data);
+    // console.log('dnadlksd', data);
+
     async function fetchData(token) {
-      console.log(token);
+      // console.log(token);
       const updatedStatus = await GetOrderStatus(id, token);
-      console.log(updatedStatus);
+      // console.log(updatedStatus);
       setStatusBack(updatedStatus.status);
     }
-    fetchData(data.token);
+
+    if (id) fetchData(data.token);
   }, [id]);
 
-  // useEffect(() => {
+  useEffect(() => {
+  }, [statusBack]);
 
-  // }, [id, userInfo]);
+  async function reload(stattus) {
+    handleStatusChange(id, userInfo.token, stattus);
+    const updatedStatus = await GetOrderStatus(id, userInfo.token);
+    setStatusBack(updatedStatus.status);
+    // history.push('/customer/orders');
+  }
 
   return (
     <header>
@@ -53,14 +63,15 @@ export default function CustomerOrderDetails({ saleInfo, name }) {
           `customer_order_details__element-order-details-label-delivery-status${id}`
         }
       >
-        {status}
+        {statusBack}
 
       </h2>
       <button
+        data-testid="customer_order_details__button-delivery-check"
         type="button"
         disabled={ statusBack !== 'Em Trânsito' }
-        data-testid="customer_order_details__button-delivery-check"
-        onClick={ () => handleStatusChange(id, userInfo.token, 'Entregue') }
+        // onClick={ () => handleStatusChange(id, userInfo.token, 'Entregue') }
+        onClick={ () => reload('Entregue') }
       >
         Marcar como entregue
       </button>
@@ -81,6 +92,9 @@ CustomerOrderDetails.propTypes = {
     saleDate: PropTypes.string,
     sellerId: PropTypes.number,
   }).isRequired,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
+};
 
+CustomerOrderDetails.defaultProps = {
+  name: '',
 };

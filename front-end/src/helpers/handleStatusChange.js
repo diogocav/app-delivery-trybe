@@ -8,5 +8,6 @@ export default async function handleStatusChange(saleId, token, status) {
     { status },
   );
   /*  window.location.reload(); */
+
   return response;
 }
