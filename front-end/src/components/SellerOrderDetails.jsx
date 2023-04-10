@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import handleStatusChange from '../helpers/handleStatusChange';
-// import fetchApi from '../services/fetchApi';
 import { formatDate } from '../helpers/formatNumbers';
 import GetOrderStatus from '../helpers/GetOrderStatus';
-// import GetOrderStatus from '../helpers/GetOrderStatus';
 
 export default function SellerOrderDetails({ saleInfo }) {
   const { id, status, saleDate } = saleInfo;
@@ -22,6 +20,12 @@ export default function SellerOrderDetails({ saleInfo }) {
 
     if (id) fetchData(data.token);
   }, [id]);
+
+  async function reload(stattus) {
+    handleStatusChange(id, userInfo.token, stattus);
+    const updatedStatus = await GetOrderStatus(id, userInfo.token);
+    setStatusBack(updatedStatus.status);
+  }
 
   return (
     <header>
@@ -47,7 +51,7 @@ export default function SellerOrderDetails({ saleInfo }) {
       <button
         data-testid="seller_order_details__button-preparing-check"
         type="button"
-        onClick={ () => handleStatusChange(id, userInfo.token, 'Preparando') }
+        onClick={ () => reload('Preparando') }
         disabled={ statusBack !== 'Pendente' }
       >
         Preparar Pedido
@@ -56,7 +60,7 @@ export default function SellerOrderDetails({ saleInfo }) {
         data-testid="seller_order_details__button-dispatch-check"
         disabled={ statusBack !== 'Preparando' }
         type="button"
-        onClick={ () => handleStatusChange(id, userInfo.token, 'Em Trânsito') }
+        onClick={ () => reload('Em Trânsito') }
       >
         Saiu para Entrega
       </button>

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { formatDate } from '../helpers/formatNumbers';
-// import fetchApi from '../services/fetchApi';
 import handleStatusChange from '../helpers/handleStatusChange';
-/* import { formatDate } from '../helpers/formatNumbers';  */
+import GetOrderStatus from '../helpers/GetOrderStatus';
 
 export default function CustomerOrderDetails({ saleInfo, name }) {
   const { id, status, saleDate } = saleInfo;
@@ -17,6 +16,7 @@ export default function CustomerOrderDetails({ saleInfo, name }) {
     async function fetchData(token) {
       console.log(token);
       const updatedStatus = await GetOrderStatus(id, token);
+      console.log(updatedStatus);
       setStatusBack(updatedStatus.status);
     }
     fetchData(data.token);
