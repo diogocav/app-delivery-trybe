@@ -14,10 +14,10 @@ const create = async (req, res) => {
 
   const newSale = await saleService.createNewSale(newSaleInfo);
 
-  const allProductsSale = await productsSale.map(async (product) => {
-    await saleService.createNewSaleProduct(newSale.id, product.id, product.quantity);
+  const allProductsSale = productsSale.map(async (product) => {
+    saleService.createNewSaleProduct(newSale.id, product.id, product.quantity);
   });
-  Promise.all(allProductsSale);
+  await Promise.all(allProductsSale);
 
    res.status(201).json({ id: newSale.id });
 };
