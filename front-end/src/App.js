@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Products from './pages/Products';
 import Checkout from './pages/Checkout';
 import Orders from './pages/Orders';
+import Admin from './pages/Admin';
 import OrdersDetail from './pages/OrdersDetail';
 import './App.css';
 
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/customer/orders/:id" component={ OrdersDetail } />
           <Route exact path="/seller/orders" component={ Orders } />
           <Route exact path="/seller/orders/:id" component={ OrdersDetail } />
+          <Route exact path="/admin/manage" component={ Admin } />
           <Route exact path="/">
             <Redirect to="/login" />
           </Route>
