@@ -43,7 +43,6 @@ describe('Teste para a rota /login', function () {
        .post('/login')
        .send(LOGIN_INPUT);
 
-// console.log(chaiHttpResponse);
     // Assertion
     expect(chaiHttpResponse.status).to.be.equals(200);
     expect(chaiHttpResponse.body).to.be.deep.equal({ token: TOKEN });
@@ -56,7 +55,6 @@ describe('Teste para a rota /login', function () {
       };
 
     User.findOne.resolves(null);
-    // sinon.stub(User, 'findOne').resolves(null);
 
     // Action
     const chaiHttpResponse = await chai
@@ -76,7 +74,6 @@ describe('Teste para a rota /login', function () {
       };
 
     User.findOne.resolves(LOGIN_OUTPUT);
-    // sinon.stub(User, 'findOne').resolves(LOGIN_OUTPUT);
 
     // Action
     const chaiHttpResponse = await chai
