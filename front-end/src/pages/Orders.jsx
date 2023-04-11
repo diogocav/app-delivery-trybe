@@ -1,30 +1,27 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from '../components/NavBar';
 import OrderCard from '../components/OrderCard';
 import fetchApi from '../services/fetchApi';
-import Context from '../context/Context';
 
 export default function Products() {
   const [sales, setSales] = useState([]);
-  const { userInfo } = useContext(Context);
-  const { id, token } = userInfo;
 
   useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('user')) || '';
     async function fetchSales() {
-      const response = await fetchApi('GET', `orders/${id}`, token);
+      const response = await fetchApi('GET', `orders/${data?.id}`, data?.token);
       setSales(response);
     }
     fetchSales();
-  }, [id, token]);
+  }, []);
 
   return (
     <div>
       <NavBar />
       {sales.map((sale, index) => (
         <OrderCard
-          key={ sale.id }
+          key={ index }
           sale={ sale }
-          index={ index }
         />
       ))}
     </div>
