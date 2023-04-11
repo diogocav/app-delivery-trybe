@@ -43,6 +43,9 @@ export default function Login() {
       if (decoded.data.role === 'seller') {
         history.push('/seller/orders');
       }
+      if (decoded.data.role === 'administrator') {
+        history.push('/admin/manage');
+      }
     }
   }, [setIsDisabledLoginError, email, password, history]);
   return (

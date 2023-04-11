@@ -8,7 +8,7 @@ const { User } = require('../../database/models');
 
 chai.use(chaiHttp);
 
-describe('Teste para a rota /login', function () {
+describe('Teste para a rota /register', function () {
   const REGISTER_INPUT = {
     name: 'Cliente Zé Birita',
     email: 'zebirita@email.com',

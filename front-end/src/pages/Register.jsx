@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import fetchApi from '../services/fetchApi';
+import { validateName, validateEmail, validatePassword } from '../helpers/validations';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -8,21 +9,25 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [isDisabledRegisterError, setIsDisabledRegisterError] = useState(false);
   const history = useHistory();
+
   const handleChange = (value, func) => func(value);
-  const validateName = (nameInput) => {
-    const maxNameLength = 12;
-    return nameInput.length >= maxNameLength;
-  };
-  const validateEmail = (emailInput) => {
-    const validEmail = /\S+@\S+\.\S+/;
-    return validEmail.test(emailInput);
-  };
-  const validatePassword = (passwordInput) => {
-    const minPasswordLength = 6;
-    return passwordInput.length >= minPasswordLength;
-  };
+
+  // const validateName = (nameInput) => {
+  //   const maxNameLength = 12;
+  //   return nameInput.length >= maxNameLength;
+  // };
+  // const validateEmail = (emailInput) => {
+  //   const validEmail = /\S+@\S+\.\S+/;
+  //   return validEmail.test(emailInput);
+  // };
+  // const validatePassword = (passwordInput) => {
+  //   const minPasswordLength = 6;
+  //   return passwordInput.length >= minPasswordLength;
+  // };
+
   const validateRegister = () => validateName(name)
     && validateEmail(email) && validatePassword(password);
+
   const handleClickRegister = useCallback(async () => {
     const result = await fetchApi('POST', 'register', '', { name, email, password });
     if (result.message === 'account created') {
