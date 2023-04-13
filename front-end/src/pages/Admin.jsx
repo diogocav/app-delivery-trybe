@@ -14,6 +14,21 @@ export default function Admin() {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
 
+  useEffect(() => {
+    const currentUserInfo = JSON.parse(localStorage.getItem('user'));
+    setUserInfo(currentUserInfo);
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      const getAllUsers = await fetchApi('GET', 'admin/users', userInfo.token);
+      setUsersList(getAllUsers);
+    }
+    if (userInfo) fetchData();
+  }, [userInfo]);
+
+  useEffect(() => {}, [usersList, validate]);
+
   const handleClickRemoveItem = async (userId) => {
     const result = await fetchApi('DELETE', 'admin/delete', userInfo.token, userId);
     const newUserList = usersList.filter((user) => user.name !== userName);
@@ -90,22 +105,6 @@ export default function Admin() {
     );
   };
   /* admin_manage__element-invalid-register [Elemento oculto (Mensagens de erro)] */
-
-  useEffect(() => {
-    const currentUserInfo = JSON.parse(localStorage.getItem('user'));
-    setUserInfo(currentUserInfo);
-  }, []);
-
-  useEffect(() => {
-    async function fetchData() {
-      const getAllUsers = await fetchApi('GET', 'admin/users', userInfo.token);
-      setUsersList(getAllUsers);
-    }
-    if (userInfo) fetchData();
-  }, [userInfo]);
-
-  useEffect(() => {
-  }, [usersList, validate]);
 
   return (
     <div>

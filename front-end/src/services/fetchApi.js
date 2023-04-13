@@ -16,6 +16,18 @@ const fetchApi = async (methodHttp, endpoint, auth = '', payload) => {
     )
       .then((response) => response.json())
       .catch((error) => error);
+    // const fetchResult = await fetch(
+    //   url,
+    //   {
+    //     method,
+    //     headers: {
+    //       Authorization: auth,
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(payload),
+    //   },
+    // );
+    // result = await fetchResult.json();
   } else {
     result = await fetch(
       url,

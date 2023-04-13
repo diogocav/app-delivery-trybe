@@ -53,7 +53,7 @@ export default function ProductCard({ product }) {
   }
 
   return (
-    <div key={ id }>
+    <section key={ id }>
       <h3 data-testid={ `customer_products__element-card-title-${id}` }>
         {name}
       </h3>
@@ -88,7 +88,7 @@ export default function ProductCard({ product }) {
         -
 
       </button>
-    </div>
+    </section>
   );
 }
 
