@@ -14,9 +14,10 @@ const getAllUsers = async () => {
 };
 
 const deleteUser = async (id) => {
-  await User.destroy(
+ const result = await User.destroy(
       { where: { id } },
     );
+   return result;
 };
 
 const createUser = async (name, email, password, role) => {

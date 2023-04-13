@@ -11,9 +11,9 @@ const deleteUser = async (req, res) => {
   const { role } = req;
   const { id } = req.params;
   if (role !== 'administrator') return res.status(409).json({ message: 'You dont have acess' });
-  await adminService.deleteUser(id);
-
-  return res.status(204).json({ message: 'Finished' });
+  const result = await adminService.deleteUser(id);
+  
+  if (result === 1) return res.status(204).json({ message: 'Finished' });
 };
 
 const newUser = async (req, res) => {
