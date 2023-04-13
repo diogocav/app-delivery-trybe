@@ -29,7 +29,7 @@ export default function UserRow({ user, index, handleClickRemoveItem = () => {} 
         {role}
       </td>
       <td
-        data-testid={ `admin_manage__element-user-table-remove-${index}` }
+        data-testid={ `admin_manage__element-user-table-remove-${+index + 1}` }
       >
         <button
           type="button"
