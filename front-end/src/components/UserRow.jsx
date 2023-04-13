@@ -33,7 +33,7 @@ export default function UserRow({ user, index, handleClickRemoveItem = () => {} 
       >
         <button
           type="button"
-          onClick={ () => handleClickRemoveItem(id) }
+          onClick={ () => handleClickRemoveItem(id, name) }
         >
           Excluir
         </button>
