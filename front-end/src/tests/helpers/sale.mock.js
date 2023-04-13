@@ -1,3 +1,8 @@
+const DATE = '2023-04-12T19:35:10.000Z';
+const SKOL = 'Skol Lata 250ml';
+const ANTARTICA = 'Antarctica Pilsen 300ml';
+const BEATS = 'Skol Beats Senses 313ml';
+
 const sale = {
   id: 1,
   userId: 3,
@@ -5,25 +10,25 @@ const sale = {
   totalPrice: '16.07',
   deliveryAddress: 'Rua Teste',
   deliveryNumber: '666',
-  saleDate: '2023-04-12T19:35:10.000Z',
+  saleDate: DATE,
   status: 'Pendente',
   products: [
     {
-      name: 'Skol Lata 250ml',
+      name: SKOL,
       price: '2.20',
       SaleProduct: {
         quantity: 3,
       },
     },
     {
-      name: 'Antarctica Pilsen 300ml',
+      name: ANTARTICA,
       price: '2,49',
       SaleProduct: {
         quantity: 2,
       },
     },
     {
-      name: 'Skol Beats Senses 313ml',
+      name: BEATS,
       price: '4.49',
       SaleProduct: {
         quantity: 1,
@@ -32,7 +37,114 @@ const sale = {
   ],
 };
 
-module.exports = sale;
+const salePreparing = {
+  id: 1,
+  userId: 3,
+  sellerId: 2,
+  totalPrice: '16.07',
+  deliveryAddress: 'Rua Teste',
+  deliveryNumber: '666',
+  saleDate: DATE,
+  status: 'Preparando',
+  products: [
+    {
+      name: SKOL,
+      price: '2.20',
+      SaleProduct: {
+        quantity: 3,
+      },
+    },
+    {
+      name: ANTARTICA,
+      price: '2,49',
+      SaleProduct: {
+        quantity: 2,
+      },
+    },
+    {
+      name: BEATS,
+      price: '4.49',
+      SaleProduct: {
+        quantity: 1,
+      },
+    },
+  ],
+};
+
+const saleDispatch = {
+  id: 1,
+  userId: 3,
+  sellerId: 2,
+  totalPrice: '16.07',
+  deliveryAddress: 'Rua Teste',
+  deliveryNumber: '666',
+  saleDate: DATE,
+  status: 'Em Trânsito',
+  products: [
+    {
+      name: SKOL,
+      price: '2.20',
+      SaleProduct: {
+        quantity: 3,
+      },
+    },
+    {
+      name: ANTARTICA,
+      price: '2,49',
+      SaleProduct: {
+        quantity: 2,
+      },
+    },
+    {
+      name: BEATS,
+      price: '4.49',
+      SaleProduct: {
+        quantity: 1,
+      },
+    },
+  ],
+};
+
+const saleArrived = {
+  id: 1,
+  userId: 3,
+  sellerId: 2,
+  totalPrice: '16.07',
+  deliveryAddress: 'Rua Teste',
+  deliveryNumber: '666',
+  saleDate: DATE,
+  status: 'Entregue',
+  products: [
+    {
+      name: SKOL,
+      price: '2.20',
+      SaleProduct: {
+        quantity: 3,
+      },
+    },
+    {
+      name: ANTARTICA,
+      price: '2,49',
+      SaleProduct: {
+        quantity: 2,
+      },
+    },
+    {
+      name: BEATS,
+      price: '4.49',
+      SaleProduct: {
+        quantity: 1,
+      },
+    },
+  ],
+};
+
+module.exports = {
+  sale,
+  salePreparing,
+  saleDispatch,
+  saleArrived,
+};
 
 // {
 //     "productsSale": [{"id": 1, "name": "Skol Lata 250ml", "quantity": 3, "price": "2,20"},

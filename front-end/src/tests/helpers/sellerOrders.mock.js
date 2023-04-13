@@ -10,7 +10,7 @@ const sellerOrders = [
     status: 'Pendente',
   },
   {
-    id: 4,
+    id: 2,
     userId: 3,
     sellerId: 2,
     totalPrice: '27.94',

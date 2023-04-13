@@ -6,7 +6,7 @@ import renderWithRouter from './helpers/renderWithRouter';
 import products from './helpers/products.mock';
 import sellers from './helpers/sellers.mock';
 import selectEvent from 'react-select-event'
-import sale from './helpers/sale.mock';
+import { sale } from './helpers/sale.mock';
 
 describe('testes da pagina de pedidos', () => {
   let historyGlobal;

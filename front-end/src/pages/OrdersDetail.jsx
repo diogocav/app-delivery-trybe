@@ -79,7 +79,7 @@ export default function OrdersDetail() {
             <th>Quantidade</th>
             <th>Valor Unitário</th>
             <th>SubTotal</th>
-            {pathArray[1] === 'seller' && (<th>Remover Item</th>)}
+            {pathArray[2] === 'checkout' && (<th>Remover Item</th>)}
           </tr>
         </thead>
         <tbody>
