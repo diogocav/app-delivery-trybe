@@ -25,8 +25,9 @@ const create = async (req, res) => {
 const getAllSalesById = async (req, res) => {
   const { role } = req;
   const { id } = req.params;
-  
+
   const sales = await saleService.getAllSalesById(id, role);
+  
   return res.status(200).json(sales);
 };
 

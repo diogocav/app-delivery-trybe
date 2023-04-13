@@ -13,9 +13,9 @@ const tokenValidation = async (req, res, next) => {
 
     try {
       const decoded = jwt.verify(token, secret);
-
+  
       const user = await userService.findOne(decoded.data.email);
-
+      
       if (!user) {
         return res.status(401).json({ message: 'Token must be a valid token' });
       }

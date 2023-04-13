@@ -31,10 +31,11 @@ const createNewSaleProduct = async (saleId, productId, quantity) => {
 };
 
 const getAllSalesById = async (id, role) => {
+  console.log('role', role);
     if (role === 'customer') {
         const sales = await Sale.findAll({
             where: { userId: id },
-          });    
+          });   
           return sales;
     }
     if (role === 'seller') {
@@ -71,7 +72,6 @@ const update = async (id, newStatus) => {
     { status: newStatus },
     { where: { id } },
   );
- console.log('service', affectedCount);
   return affectedCount;
 };
 
