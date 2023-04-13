@@ -63,20 +63,20 @@ export default function ProductRow({ product, index, handleClickRemoveItem = () 
           .toString()
           .replace('.', ',')}
       </td>
-      <td
-        data-testid={
-          `${dataIdUser}_${dataTestidPage}__element-order-table-remove-${index}`
-        }
-      >
-        { path === '/customer/checkout'
+      { path === '/customer/checkout'
       && (
-        <button
-          type="button"
-          onClick={ () => handleClickRemoveItem(name) }
+        <td
+          data-testid={
+            `${dataIdUser}_${dataTestidPage}__element-order-table-remove-${index}`
+          }
         >
-          Remover
-        </button>)}
-      </td>
+          <button
+            type="button"
+            onClick={ () => handleClickRemoveItem(name) }
+          >
+            Remover
+          </button>
+        </td>)}
     </tr>
   );
 }
