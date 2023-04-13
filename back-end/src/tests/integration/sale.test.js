@@ -34,7 +34,6 @@ beforeEach(function () {
          .get('/sale/2')
          .set({ Authorization: TOKEN });
   
-   console.log('SALE', chaiHttpResponse);
       // Assertion
      expect(chaiHttpResponse.status).to.be.equals(200); 
      expect(chaiHttpResponse.body).to.be.deep.equal(SALE_OUTPUT);
