@@ -14,10 +14,10 @@ const create = async (req, res) => {
 
   const newSale = await saleService.createNewSale(newSaleInfo);
 
-  const allProductsSale = await productsSale.map(async (product) => {
-    await saleService.createNewSaleProduct(newSale.id, product.id, product.quantity);
+  const allProductsSale = productsSale.map(async (product) => {
+    saleService.createNewSaleProduct(newSale.id, product.id, product.quantity);
   });
-  Promise.all(allProductsSale);
+  await Promise.all(allProductsSale);
 
    res.status(201).json({ id: newSale.id });
 };
@@ -25,8 +25,9 @@ const create = async (req, res) => {
 const getAllSalesById = async (req, res) => {
   const { role } = req;
   const { id } = req.params;
-  
+
   const sales = await saleService.getAllSalesById(id, role);
+  
   return res.status(200).json(sales);
 };
 
@@ -34,6 +35,7 @@ const getSale = async (req, res) => {
   const { id } = req.params;
   
   const sale = await saleService.getSale(id);
+  console.log(id);
   return res.status(200).json(sale);
 };
 

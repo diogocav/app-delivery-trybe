@@ -14,7 +14,22 @@ export default function Admin() {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
 
-  const handleClickRemoveItem = async (userId) => {
+  useEffect(() => {
+    const currentUserInfo = JSON.parse(localStorage.getItem('user'));
+    setUserInfo(currentUserInfo);
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      const getAllUsers = await fetchApi('GET', 'admin/users', userInfo.token);
+      setUsersList(getAllUsers);
+    }
+    if (userInfo) fetchData();
+  }, [userInfo]);
+
+  useEffect(() => {}, [usersList, validate]);
+
+  const handleClickRemoveItem = async (userId, userName) => {
     const result = await fetchApi('DELETE', 'admin/delete', userInfo.token, userId);
     const newUserList = usersList.filter((user) => user.name !== userName);
     setUsersList(newUserList);
@@ -26,15 +41,6 @@ export default function Admin() {
         </Alert>
       );
     }
-    return (
-      <Alert
-        severity="error"
-        data-testid="admin_manage__element-invalid-register"
-      >
-        <AlertTitle>Error</AlertTitle>
-        {result.message}
-      </Alert>
-    );
   };
 
   const handleName = ({ target }) => {
@@ -54,7 +60,6 @@ export default function Admin() {
   };
 
   const handleClickFinishRegister = async () => {
-    console.log('ola');
     const newUser = { name, email, password, role };
 
     const result = await fetchApi('POST', 'admin/new_user', userInfo.token, newUser);
@@ -62,15 +67,6 @@ export default function Admin() {
 
     usersList.push(newUser);
     setUsersList(usersList);
-
-    if (result.message === 'account created') {
-      return (
-        <Alert severity="success">
-          <AlertTitle>Success</AlertTitle>
-          User registered successfully!
-        </Alert>
-      );
-    }
 
     // return (
     //   <Alert
@@ -90,22 +86,6 @@ export default function Admin() {
     );
   };
   /* admin_manage__element-invalid-register [Elemento oculto (Mensagens de erro)] */
-
-  useEffect(() => {
-    const currentUserInfo = JSON.parse(localStorage.getItem('user'));
-    setUserInfo(currentUserInfo);
-  }, []);
-
-  useEffect(() => {
-    async function fetchData() {
-      const getAllUsers = await fetchApi('GET', 'admin/users', userInfo.token);
-      setUsersList(getAllUsers);
-    }
-    if (userInfo) fetchData();
-  }, [userInfo]);
-
-  useEffect(() => {
-  }, [usersList, validate]);
 
   return (
     <div>

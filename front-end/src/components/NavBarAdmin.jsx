@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 export default function NavBarAdmin() {
   const [userInfo, setUserInfo] = useState();
@@ -28,13 +28,13 @@ export default function NavBarAdmin() {
           {userInfo?.name}
         </li>
         <li>
-          <Link
-            to="/login"
+          <button
+            type="button"
             data-testid="customer_products__element-navbar-link-logout"
             onClick={ () => logOut() }
           >
             Sair
-          </Link>
+          </button>
         </li>
       </ul>
     </nav>
