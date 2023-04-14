@@ -71,7 +71,11 @@ export default function CustomerOrderDetails({ saleInfo, name }) {
       </h2>
       <button
         data-testid="customer_order_details__button-delivery-check"
-        className="border-black border-2 rounded w-1/6 h-10 text-center bg-darkYellow"
+        className={
+          statusBack !== 'Em Trânsito'
+            ? 'border-black border-2 rounded w-1/6 h-10 text-center bg-grey'
+            : 'border-black border-2 rounded w-1/6 h-10 text-center bg-darkYellow'
+        }
         type="button"
         disabled={ statusBack !== 'Em Trânsito' }
         // onClick={ () => handleStatusChange(id, userInfo.token, 'Entregue') }

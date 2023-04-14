@@ -81,7 +81,11 @@ export default function Login() {
           onChange={ ({ target: { value } }) => (handleChange(value, setPassword)) }
         />
         <button
-          className="border-black border rounded w-3/4 bg-darkYellow"
+          className={
+            !validateLogin()
+              ? 'border-black border rounded w-3/4 bg-grey'
+              : 'border-black border rounded w-3/4 bg-darkYellow'
+          }
           data-testid="common_login__button-login"
           type="button"
           disabled={ !validateLogin() }

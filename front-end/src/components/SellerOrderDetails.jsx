@@ -57,7 +57,11 @@ export default function SellerOrderDetails({ saleInfo }) {
       </h2>
       <button
         data-testid="seller_order_details__button-preparing-check"
-        className="border-black border-2 rounded w-1/6 h-10 text-center bg-darkYellow"
+        className={
+          statusBack !== 'Pendente'
+            ? 'border-black border-2 rounded w-1/6 h-10 text-center bg-grey'
+            : 'border-black border-2 rounded w-1/6 h-10 text-center bg-darkYellow'
+        }
         type="button"
         disabled={ statusBack !== 'Pendente' }
         // onClick={ () => handleStatusChange(id, userInfo.token, 'Preparando') }
@@ -67,7 +71,11 @@ export default function SellerOrderDetails({ saleInfo }) {
       </button>
       <button
         data-testid="seller_order_details__button-dispatch-check"
-        className="border-black border-2 rounded w-1/6 h-10 text-center bg-darkYellow"
+        className={
+          statusBack !== 'Preparando'
+            ? 'border-black border-2 rounded w-1/6 h-10 text-center bg-grey'
+            : 'border-black border-2 rounded w-1/6 h-10 text-center bg-darkYellow'
+        }
         type="button"
         disabled={ statusBack !== 'Preparando' }
         // onClick={ () => handleStatusChange(id, userInfo.token, 'Em Trânsito') }
