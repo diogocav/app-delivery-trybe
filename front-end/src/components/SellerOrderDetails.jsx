@@ -32,7 +32,10 @@ export default function SellerOrderDetails({ saleInfo }) {
   }
 
   return (
-    <header>
+    <header
+      className="flex flex-wrap gap-5 p-6 place-content-center
+        border-black border-2 rounded-md mt-2"
+    >
       <h2
         data-testid="seller_order_details__element-order-details-label-order-id"
       >
@@ -54,6 +57,7 @@ export default function SellerOrderDetails({ saleInfo }) {
       </h2>
       <button
         data-testid="seller_order_details__button-preparing-check"
+        className="border-black border-2 rounded w-1/6 text-center bg-darkYellow"
         type="button"
         disabled={ statusBack !== 'Pendente' }
         // onClick={ () => handleStatusChange(id, userInfo.token, 'Preparando') }
@@ -63,6 +67,7 @@ export default function SellerOrderDetails({ saleInfo }) {
       </button>
       <button
         data-testid="seller_order_details__button-dispatch-check"
+        className="border-black border-2 rounded w-1/6 text-center bg-darkYellow"
         type="button"
         disabled={ statusBack !== 'Preparando' }
         // onClick={ () => handleStatusChange(id, userInfo.token, 'Em Trânsito') }

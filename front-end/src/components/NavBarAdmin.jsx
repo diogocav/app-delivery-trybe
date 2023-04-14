@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 export default function NavBarAdmin() {
   const [userInfo, setUserInfo] = useState();
+  const history = useHistory();
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('user')) || '';
@@ -12,6 +13,7 @@ export default function NavBarAdmin() {
   function logOut() {
     localStorage.removeItem('user');
     setUserInfo('');
+    history.push('/login');
   }
 
   return (

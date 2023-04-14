@@ -25,8 +25,8 @@ export default function ProductRow({ product, index, handleClickRemoveItem = () 
 
   return (
     <tr
-      className="flex justify-between place-items-center gap-4 bg-lightYellow
-      border-black border-t-2 border-b-2 rounded mt-2"
+      className="flex justify-between items-stretch place-items-center gap-4
+      bg-lightYellow border-black border-t-2 border-b-2 rounded mt-2"
     >
       <td
         className="border-black border-x-2 rounded w-16 text-center bg-darkYellow"

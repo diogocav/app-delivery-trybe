@@ -19,7 +19,7 @@ export default function Products() {
   return (
     <div>
       <NavBar />
-      <div className="flex flex-wrap gap-6 p-6 place-content-center">
+      <section className="flex flex-wrap gap-6 p-6 place-content-center">
         {products.map((product, index) => (
           <span
             key={ product.id }
@@ -32,7 +32,7 @@ export default function Products() {
             />
           </span>
         ))}
-      </div>
+      </section>
       <ShoppingCart />
     </div>
   );

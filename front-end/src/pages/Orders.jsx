@@ -18,12 +18,14 @@ export default function Products() {
   return (
     <div>
       <NavBar />
-      {sales.map((sale, index) => (
-        <OrderCard
-          key={ index }
-          sale={ sale }
-        />
-      ))}
+      <section className="flex flex-wrap gap-6 p-6 place-content-center">
+        {sales.map((sale, index) => (
+          <OrderCard
+            key={ index }
+            sale={ sale }
+          />
+        ))}
+      </section>
     </div>
   );
 }

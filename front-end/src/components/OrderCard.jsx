@@ -36,6 +36,9 @@ export default function OrderCard({ sale }) {
     <button
       type="button"
       onClick={ handleCardButtonClick }
+      // className="flex flex-col place-items-center h-full pt-2"
+      className="border-black border-2 rounded w-1/6 text-center bg-darkYellow"
+
     >
       <h3 data-testid={ `${dataTestIdUser}_orders__element-order-id-${id}` }>
         { `Pedido: ${id}` }

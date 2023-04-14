@@ -37,11 +37,14 @@ export default function CustomerOrderDetails({ saleInfo, name }) {
   }
 
   return (
-    <header>
+    <header
+      className="flex flex-wrap gap-5 p-6 place-content-center
+        border-black border-2 rounded-md mt-2"
+    >
       <h2
         data-testid="customer_order_details__element-order-details-label-order-id"
       >
-        {id}
+        {`Pedido ${id}`}
       </h2>
 
       <h2
@@ -68,12 +71,13 @@ export default function CustomerOrderDetails({ saleInfo, name }) {
       </h2>
       <button
         data-testid="customer_order_details__button-delivery-check"
+        className="border-black border-2 rounded w-1/6 text-center bg-darkYellow"
         type="button"
         disabled={ statusBack !== 'Em Trânsito' }
         // onClick={ () => handleStatusChange(id, userInfo.token, 'Entregue') }
         onClick={ () => reload('Entregue') }
       >
-        Marcar como entregue
+        Pedido Recebido
       </button>
       {/*  <button
         type="button"

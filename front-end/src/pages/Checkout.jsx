@@ -46,6 +46,9 @@ export default function Checkout() {
       { productsSale, orderInfo, userInfo, totalOrderPrice },
     );
     history.push(`/customer/orders/${result.id}`);
+
+    localStorage.removeItem('cart');
+    setProductsSale('');
   };
 
   useEffect(() => {

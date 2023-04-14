@@ -61,7 +61,7 @@ export default function OrdersDetail() {
   }, [saleInfo]);
 
   return (
-    <div>
+    <div className="flex flex-col place-items-center h-full">
       <NavBar />
       {
         pathArray[1] === 'customer' ? <CustomerOrderDetails
@@ -71,18 +71,18 @@ export default function OrdersDetail() {
         />
           : <SellerOrderDetails saleInfo={ saleInfo } index={ saleInfo.index } />
       }
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Descrição</th>
-            <th>Quantidade</th>
-            <th>Valor Unitário</th>
-            <th>SubTotal</th>
-            {pathArray[2] === 'checkout' && (<th>Remover Item</th>)}
-          </tr>
+      <table
+        className="w-3/4 flex flex-col place-items-center place-content-center gap-6
+      border-black border-2 rounded-md mt-2 py-6"
+      >
+        <thead className="flex w-full justify-between gap-4 px-4">
+          <th className="w-16 text-center">ITEM</th>
+          <th className="w-16 text-center">DESCRIÇÃO</th>
+          <th className="w-16 text-center">QUANTIDADE</th>
+          <th className="w-16 text-center">VALOR UNITÁRIO</th>
+          <th className="w-16 text-center">SUB TOTAL</th>
         </thead>
-        <tbody>
+        <tbody className="w-full px-4">
           {productsArray.map((product, index) => {
             const { SaleProduct: { quantity }, name, price } = product;
             const productDetails = {
@@ -99,12 +99,20 @@ export default function OrdersDetail() {
             );
           })}
         </tbody>
+        <h3
+          data-testid={ `${pathArray[1]}_order_details__element-order-total-price` }
+          className="border-black border rounded w-1/4 mx-4
+        bg-darkYellow text-center"
+        >
+          TOTAL:
+          {' '}
+          <b>
+            R$
+            {' '}
+            { totalPrice }
+          </b>
+        </h3>
       </table>
-      <div data-testid={ `${pathArray[1]}_order_details__element-order-total-price` }>
-        {
-          totalPrice
-        }
-      </div>
     </div>
   );
 }
