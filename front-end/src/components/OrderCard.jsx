@@ -37,20 +37,38 @@ export default function OrderCard({ sale }) {
       type="button"
       onClick={ handleCardButtonClick }
       // className="flex flex-col place-items-center h-full pt-2"
-      className="border-black border-2 rounded w-1/6 text-center bg-darkYellow"
+      className="flex border-black border-2 rounded w-3/4 h-14 place-items-center
+      bg-lightYellow justify-around"
 
     >
-      <h3 data-testid={ `${dataTestIdUser}_orders__element-order-id-${id}` }>
-        { `Pedido: ${id}` }
+      <h3
+        data-testid={ `${dataTestIdUser}_orders__element-order-id-${id}` }
+        className="w-1/4"
+      >
+        {`Pedido: ${id}`}
       </h3>
-      <h2 data-testid={ `${dataTestIdUser}_orders__element-delivery-status-${id}` }>
-        { status }
+      <h2
+        data-testid={ `${dataTestIdUser}_orders__element-delivery-status-${id}` }
+        className="flex bg-darkYellow w-1/4 h-3/4 place-content-center place-items-center
+        border-black border-2 rounded"
+      >
+        {status}
       </h2>
-      <h3 data-testid={ `${dataTestIdUser}_orders__element-order-date-${id}` }>
-        { formattedDate }
+      <h3
+        data-testid={ `${dataTestIdUser}_orders__element-order-date-${id}` }
+        className="w-1/4"
+      >
+        {formattedDate}
       </h3>
-      <h3 data-testid={ `${dataTestIdUser}_orders__element-card-price-${id}` }>
-        { formattedPrice }
+      <h3
+        data-testid={ `${dataTestIdUser}_orders__element-card-price-${id}` }
+        className="w-1/4"
+      >
+        <b>
+          R$
+          {' '}
+          {formattedPrice}
+        </b>
       </h3>
     </button>
   );

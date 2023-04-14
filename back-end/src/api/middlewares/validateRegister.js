@@ -1,5 +1,5 @@
 const registerService = require('../services/RegisterService');
- 
+
 const validateRegister = async (req, res, next) => {
   const { email, name } = req.body;
 
@@ -8,9 +8,9 @@ const validateRegister = async (req, res, next) => {
   const findName = await registerService.findOne('name', name);
 
   if (findEmail || findName) {
-    return res.status(409).json({ message: 'Email ou nome já cadastrados' });
+    return res.status(409).json({ errorMessage: 'Email ou nome já cadastrados' });
   }
-  
+
   return next();
 };
 

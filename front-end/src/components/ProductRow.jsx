@@ -25,8 +25,8 @@ export default function ProductRow({ product, index, handleClickRemoveItem = () 
 
   return (
     <tr
-      className="flex justify-between items-stretch place-items-center gap-4
-      bg-lightYellow border-black border-t-2 border-b-2 rounded mt-2"
+      className="flex justify-between place-items-center gap-4
+      bg-lightYellow border-black border-t-2 border-b-2 border-r-2 rounded mt-2"
     >
       <td
         className="border-black border-x-2 rounded w-16 text-center bg-darkYellow"
@@ -74,7 +74,7 @@ export default function ProductRow({ product, index, handleClickRemoveItem = () 
       { path === '/customer/checkout'
       && (
         <td
-          className="w-28 text-center border-black border-x-2 rounded bg-darkYellow"
+          className="w-28 text-center border-black border-l-2 rounded bg-darkYellow"
           data-testid={
             `${dataIdUser}_${dataTestidPage}__element-order-table-remove-${index}`
           }
@@ -83,7 +83,7 @@ export default function ProductRow({ product, index, handleClickRemoveItem = () 
             type="button"
             onClick={ () => handleClickRemoveItem(name) }
           >
-            Remover
+            REMOVER
           </button>
         </td>)}
     </tr>

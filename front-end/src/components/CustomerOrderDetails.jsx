@@ -38,8 +38,8 @@ export default function CustomerOrderDetails({ saleInfo, name }) {
 
   return (
     <header
-      className="flex flex-wrap gap-5 p-6 place-content-center
-        border-black border-2 rounded-md mt-2"
+      className="flex justify-between p-4 place-content-center
+        border-black border-2 rounded-md mt-2 place-items-center gap-4"
     >
       <h2
         data-testid="customer_order_details__element-order-details-label-order-id"
@@ -71,7 +71,7 @@ export default function CustomerOrderDetails({ saleInfo, name }) {
       </h2>
       <button
         data-testid="customer_order_details__button-delivery-check"
-        className="border-black border-2 rounded w-1/6 text-center bg-darkYellow"
+        className="border-black border-2 rounded w-1/6 h-10 text-center bg-darkYellow"
         type="button"
         disabled={ statusBack !== 'Em Trânsito' }
         // onClick={ () => handleStatusChange(id, userInfo.token, 'Entregue') }
@@ -79,12 +79,6 @@ export default function CustomerOrderDetails({ saleInfo, name }) {
       >
         Pedido Recebido
       </button>
-      {/*  <button
-        type="button"
-        // onClick={}
-      >
-        Marcar como entregue
-      </button> */}
     </header>
   );
 }

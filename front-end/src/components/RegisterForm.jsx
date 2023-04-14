@@ -21,10 +21,17 @@ export default function RegisterForm({
     && validateEmail(email) && validatePassword(password);
 
   return (
-    <form>
-      <label htmlFor="name">
+    <form
+      className="flex place-items-center justify-around
+    border-black border-2 h-20 rounded-md gap-4 p-4"
+    >
+      <label
+        htmlFor="name"
+        className="flex flex-col w-1/6 gap-px"
+      >
         Nome:
         <input
+          className="border-black border rounded"
           value={ name }
           name="name"
           type="text"
@@ -33,9 +40,13 @@ export default function RegisterForm({
         />
       </label>
 
-      <label htmlFor="email">
+      <label
+        htmlFor="email"
+        className="flex flex-col w-1/6 gap-px grow"
+      >
         Email:
         <input
+          className="border-black border rounded"
           value={ email }
           name="email"
           type="text"
@@ -44,9 +55,13 @@ export default function RegisterForm({
         />
       </label>
 
-      <label htmlFor="password">
+      <label
+        htmlFor="password"
+        className="flex flex-col w-1/6 gap-px"
+      >
         Password
         <input
+          className="border-black border rounded"
           value={ password }
           name="password"
           type="text"
@@ -55,9 +70,13 @@ export default function RegisterForm({
         />
       </label>
 
-      <label htmlFor="role">
+      <label
+        htmlFor="role"
+        className="flex flex-col w-1/6 gap-px"
+      >
         Role
         <select
+          className="border-black border rounded"
           value={ role }
           name="role"
           data-testid="admin_manage__select-role"
@@ -69,6 +88,7 @@ export default function RegisterForm({
       </label>
 
       <button
+        className="border-black border rounded w-1/6 h-12 bg-darkYellow text-center"
         type="button"
         data-testid="admin_manage__button-register"
         disabled={ !validateRegister() }

@@ -30,17 +30,15 @@ export default function Admin() {
   useEffect(() => {}, [usersList, validate]);
 
   const handleClickRemoveItem = async (userId, userName) => {
-    const result = await fetchApi('DELETE', 'admin/delete', userInfo.token, userId);
+    const result = await fetchApi(
+      'DELETE',
+      `admin/delete/${userId}`,
+      userInfo.token,
+    );
+    console.log(result);
     const newUserList = usersList.filter((user) => user.name !== userName);
     setUsersList(newUserList);
-    if (result.message === 'success') {
-      return (
-        <Alert severity="success">
-          <AlertTitle>Success</AlertTitle>
-          User removed successfully!
-        </Alert>
-      );
-    }
+    setValidate({ message: result.message });
   };
 
   const handleName = ({ target }) => {
@@ -67,75 +65,92 @@ export default function Admin() {
 
     usersList.push(newUser);
     setUsersList(usersList);
-
-    // return (
-    //   <Alert
-    //     severity="error"
-    //     data-testid="admin_manage__element-invalid-register"
-    //   >
-    //     <AlertTitle>Error</AlertTitle>
-    //     {result.message}
-    //   </Alert>
-    // );
-    return (
-      <h1
-        data-testid="admin_manage__element-invalid-register"
-      >
-        {result.message}
-      </h1>
-    );
   };
-  /* admin_manage__element-invalid-register [Elemento oculto (Mensagens de erro)] */
 
-  return (
-    <div>
-      <div>
-        {validate.message
-      && (
+  const renderAlert = () => {
+    console.log(validate);
+
+    if (validate.message === 'account created') {
+      return (
+        <Alert severity="success" onClose={ () => { setValidate({}); } }>
+          <AlertTitle>Success</AlertTitle>
+          Account created successfully!
+        </Alert>
+      );
+    }
+
+    if (validate.errorMessage) {
+      return (
         <Alert
+          onClose={ () => { setValidate({}); } }
           severity="error"
           data-testid="admin_manage__element-invalid-register"
         >
           <AlertTitle>Error</AlertTitle>
-          {validate.message}
+          {validate.errorMessage}
         </Alert>
-      )}
-      </div>
+      );
+    }
+
+    if (validate.message === 'Finished') {
+      return (
+        <Alert severity="success" onClose={ () => { setValidate({}); } }>
+          <AlertTitle>Success</AlertTitle>
+          User removed successfully!
+        </Alert>
+      );
+    }
+  };
+
+  return (
+    <section className="flex flex-col h-full place-items-center">
       <NavBarAdmin />
-      <h2>Cadastrar novo usuário</h2>
-      <RegisterForm
-        registerForm={ { name, email, password, role } }
-        handleName={ handleName }
-        handleEmail={ handleEmail }
-        handlePassword={ handlePassword }
-        handleRole={ handleRole }
-        handleClickFinishRegister={ handleClickFinishRegister }
-        setRole={ setRole }
-      />
-      <h2>Lista de usuários</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Senha</th>
-            <th>Tipo</th>
-            <th>Excluir</th>
-          </tr>
-        </thead>
-        <tbody>
-          {usersList ? (
-            usersList.map((user, index) => (
-              <UserRow
-                key={ index }
-                user={ user }
-                index={ index }
-                handleClickRemoveItem={ handleClickRemoveItem }
-              />
-            ))
-          ) : null}
-        </tbody>
-      </table>
-    </div>
+      <div className="w-3/12 mt-2">
+        {
+          renderAlert()
+        }
+      </div>
+      <div className="flex flex-col w-3/4 gap-4 p-4">
+        <h2>CADASTRAR NOVO USUÁRIO</h2>
+        <RegisterForm
+          registerForm={ { name, email, password, role } }
+          handleName={ handleName }
+          handleEmail={ handleEmail }
+          handlePassword={ handlePassword }
+          handleRole={ handleRole }
+          handleClickFinishRegister={ handleClickFinishRegister }
+          setRole={ setRole }
+        />
+      </div>
+      <div className="flex flex-col w-3/4 gap-4 p-4">
+        <h2>LISTA DE USUÁRIOS</h2>
+        <table
+          className="flex flex-col place-items-center
+          border-black border-2 rounded-md gap-2"
+        >
+          <thead className="flex w-full justify-between">
+            <th className="w-20 text-center">ITEM</th>
+            <th className="w-1/5 text-center">NOME</th>
+            <th className="w-1/5 text-center">E-MAIL</th>
+            <th className="w-24 text-center">TIPO</th>
+            <th className="w-1/5 text-center">EXCLUIR</th>
+          </thead>
+          <tbody
+            className="flex flex-col gap-2 w-full px-8"
+          >
+            {usersList ? (
+              usersList.map((user, index) => (
+                <UserRow
+                  key={ index }
+                  user={ user }
+                  index={ index }
+                  handleClickRemoveItem={ handleClickRemoveItem }
+                />
+              ))
+            ) : null}
+          </tbody>
+        </table>
+      </div>
+    </section>
   );
 }

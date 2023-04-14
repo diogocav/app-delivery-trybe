@@ -10,6 +10,7 @@ module.exports = {
         red: '#FF0000',
         white: '#FFFFFF',
       },
+      textDecoration: ['active'],
     },
   },
   plugins: [],

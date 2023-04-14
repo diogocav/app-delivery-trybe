@@ -10,9 +10,12 @@ const getAllUsers = async (req, res) => {
 const deleteUser = async (req, res) => {
   const { role } = req;
   const { id } = req.params;
-  if (role !== 'administrator') return res.status(409).json({ message: 'You dont have acess' });
+  if (role !== 'administrator') {
+    return res.status(409)
+      .json({ errorMessage: 'You dont have acess' });
+  }
   const result = await adminService.deleteUser(id);
-  
+
   if (result === 1) return res.status(204).json({ message: 'Finished' });
 };
 
@@ -21,9 +24,9 @@ const newUser = async (req, res) => {
   const { name, email, password, role } = req.body;
 
   if (adminRole !== 'administrator') {
-    return res.status(409).json({ message: 'You dont have acess' });
+    return res.status(409).json({ errorMessage: 'You dont have acess' });
   }
-  
+
   const passwordHash = crypto.createHash('md5').update(password).digest('hex');
   await adminService.createUser(name, email, passwordHash, role);
 
@@ -31,7 +34,7 @@ const newUser = async (req, res) => {
 };
 
 module.exports = {
-    getAllUsers,
-    deleteUser,
-    newUser,
+  getAllUsers,
+  deleteUser,
+  newUser,
 };

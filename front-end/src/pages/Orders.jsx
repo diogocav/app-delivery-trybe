@@ -18,7 +18,7 @@ export default function Products() {
   return (
     <div>
       <NavBar />
-      <section className="flex flex-wrap gap-6 p-6 place-content-center">
+      <section className="flex flex-wrap gap-6 p-6 place-content-center mt-10">
         {sales.map((sale, index) => (
           <OrderCard
             key={ index }

@@ -61,26 +61,28 @@ export default function OrdersDetail() {
   }, [saleInfo]);
 
   return (
-    <div className="flex flex-col place-items-center h-full">
+    <div className="flex flex-col place-items-center h-full gap-10">
       <NavBar />
-      {
-        pathArray[1] === 'customer' ? <CustomerOrderDetails
-          saleInfo={ saleInfo }
-          name={ sellerName }
-          index={ saleInfo.index }
-        />
-          : <SellerOrderDetails saleInfo={ saleInfo } index={ saleInfo.index } />
-      }
+      <div className="w-3/4 place-items-center place-content-center">
+        {
+          pathArray[1] === 'customer' ? <CustomerOrderDetails
+            saleInfo={ saleInfo }
+            name={ sellerName }
+            index={ saleInfo.index }
+          />
+            : <SellerOrderDetails saleInfo={ saleInfo } index={ saleInfo.index } />
+        }
+      </div>
       <table
         className="w-3/4 flex flex-col place-items-center place-content-center gap-6
       border-black border-2 rounded-md mt-2 py-6"
       >
         <thead className="flex w-full justify-between gap-4 px-4">
           <th className="w-16 text-center">ITEM</th>
-          <th className="w-16 text-center">DESCRIÇÃO</th>
-          <th className="w-16 text-center">QUANTIDADE</th>
-          <th className="w-16 text-center">VALOR UNITÁRIO</th>
-          <th className="w-16 text-center">SUB TOTAL</th>
+          <th className="grow text-center">DESCRIÇÃO</th>
+          <th className="w-16 text-center">QUANT</th>
+          <th className="w-16 text-center">UN</th>
+          <th className="w-16 text-center">TOTAL</th>
         </thead>
         <tbody className="w-full px-4">
           {productsArray.map((product, index) => {
@@ -101,149 +103,18 @@ export default function OrdersDetail() {
         </tbody>
         <h3
           data-testid={ `${pathArray[1]}_order_details__element-order-total-price` }
-          className="border-black border rounded w-1/4 mx-4
-        bg-darkYellow text-center"
+          className="flex border-black border rounded w-1/4 h-10 mx-4 place-items-center
+          place-content-center bg-darkYellow"
         >
           TOTAL:
           {' '}
           <b>
             R$
             {' '}
-            { totalPrice }
+            {totalPrice}
           </b>
         </h3>
       </table>
     </div>
   );
 }
-
-// useEffect(() => {
-//   const data = JSON.parse(localStorage.getItem('user')) || '';
-//   setUserInfo(data);
-// }, []);
-
-// CODIGO DO NATO --------------------------
-
-// useEffect(() => {
-//   async function fetchproducts() {
-//     const response = await fetchApi(
-//       'GET',
-//       `orders/details/${pathArray[3]}`,
-//       userInfo.token,
-//     );
-//     const { products } = response;
-//     console.log('fetchproducts', response);
-//     setSaleInfo(response);
-//     setproductsArray(products);
-//   }
-//   async function getSellerName({ sellerId }) {
-//     const result = await fetchApi(
-//       'GET',
-//       `users/seller/${sellerId}`,
-//     );
-//     console.log('getsellername', result);
-//     setSellerName(result?.name);
-//   }
-
-//   if (userInfo !== undefined) {
-//     console.log('fetchproducts');
-//     fetchproducts();
-//   }
-//   if (saleInfo !== undefined) {
-//     console.log('getSeller');
-//     getSellerName(saleInfo);
-//   }
-// }, [userInfo]);
-
-// ------------------- monitoria
-
-// useEffect(() => {
-//   async function fetchproducts() {
-//     const response = await fetchApi(
-//       'GET',
-//       `orders/details/${pathArray[3]}`,
-//       userInfo.token,
-//     );
-//     const { products } = response;
-//     setSaleInfo(response);
-//     setproductsArray(products);
-//   }
-
-//   if (userInfo !== undefined) {
-//     console.log("fetchproducts");
-//     fetchproducts();
-//     // setIsMounted(false);
-//   }
-// }, [userInfo, pathArray]);
-
-// useEffect(() => {
-//   async function getSellerName({ sellerId }) {
-//     const result = await fetchApi(
-//       'GET',
-//       `users/seller/${sellerId}`,
-//     );
-//     setSellerName(result.name);
-//   }
-//   if (saleInfo !== undefined) {
-//     console.log("getSeller");
-//     getSellerName(saleInfo);
-//   }
-// }, [saleInfo]);
-
-// CODIGO DO CHAT --------------------------------------------
-
-// useEffect(() => {
-//   const data = JSON.parse(localStorage.getItem('user')) || '';
-//   setUserInfo(data);
-// }, []);
-
-// useEffect(() => {
-//   async function fetchproducts() {
-//     if (!userInfo || !pathArray) {
-//       return;
-//     }
-
-//     const response = await fetchApi(
-//       'GET',
-//       `orders/details/${pathArray[3]}`,
-//       userInfo.token,
-//     );
-
-//     if (!isMounted) {
-//       return;
-//     }
-
-//     const { products } = response;
-//     setSaleInfo(response);
-//     setproductsArray(products);
-//   }
-
-//   if (userInfo !== undefined) {
-//     console.log("getSeller");
-
-//     fetchproducts();
-//   }
-
-//   return () => {
-//     setIsMounted(false);
-//   };
-// }, [userInfo, pathArray]);
-
-// useEffect(() => {
-//   async function getSellerName({ sellerId }) {
-//     const result = await fetchApi(
-//       'GET',
-//       `users/seller/${sellerId}`,
-//     );
-//     setSellerName(result?.name);
-//   }
-//   if (saleInfo !== undefined) {
-//     console.log("getSeller");
-
-//     getSellerName(saleInfo);
-//   }
-
-//   return () => {
-//     setIsMounted(false);
-//   };
-// }, [saleInfo]);
