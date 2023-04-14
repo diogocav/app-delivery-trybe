@@ -53,41 +53,49 @@ export default function ProductCard({ product }) {
   }
 
   return (
-    <section key={ id }>
+    <section key={ id } className="flex flex-col place-items-center h-full pt-2">
       <h3 data-testid={ `customer_products__element-card-title-${id}` }>
-        {name}
+        {name.toUpperCase()}
       </h3>
       <img
+        className="h-28"
         src={ urlImage }
         alt={ urlImage }
         data-testid={ `customer_products__img-card-bg-image-${id}` }
-        style={ { width: '200px', height: '150px' } }
       />
       <h3 data-testid={ `customer_products__element-card-price-${id}` }>
+        R$
+        {' '}
         {formattedPrice}
       </h3>
-      <button
-        type="button"
-        data-testid={ `customer_products__button-card-add-item-${id}` }
-        onClick={ () => addProduct() }
+      <div
+        className="flex place-content-center bg-lightYellow py-2
+         border-black border-t-2 rounded"
       >
-        +
-
-      </button>
-      <input
-        value={ quantityProducts }
-        type="number"
-        data-testid={ `customer_products__input-card-quantity-${id}` }
-        onChange={ (e) => editProduct(e) }
-      />
-      <button
-        type="button"
-        data-testid={ `customer_products__button-card-rm-item-${id}` }
-        onClick={ () => removeProduct() }
-      >
-        -
-
-      </button>
+        <button
+          className="border-black border-2 rounded w-1/6 text-center bg-darkYellow"
+          type="button"
+          data-testid={ `customer_products__button-card-rm-item-${id}` }
+          onClick={ () => removeProduct() }
+        >
+          -
+        </button>
+        <input
+          className="border-black border-y-2 w-1/4 text-right"
+          value={ quantityProducts }
+          type="number"
+          data-testid={ `customer_products__input-card-quantity-${id}` }
+          onChange={ (e) => editProduct(e) }
+        />
+        <button
+          className="border-black border-2 rounded w-1/6 text-center bg-darkYellow"
+          type="button"
+          data-testid={ `customer_products__button-card-add-item-${id}` }
+          onClick={ () => addProduct() }
+        >
+          +
+        </button>
+      </div>
     </section>
   );
 }

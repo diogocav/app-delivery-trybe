@@ -8,11 +8,10 @@ import Checkout from './pages/Checkout';
 import Orders from './pages/Orders';
 import Admin from './pages/Admin';
 import OrdersDetail from './pages/OrdersDetail';
-import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div className="bg-white w-full h-screen">
       <Provider>
         <Switch>
           <Route exact path="/login" component={ Login } />

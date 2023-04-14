@@ -24,8 +24,12 @@ export default function ProductRow({ product, index, handleClickRemoveItem = () 
   }, [path, dataIdUser]);
 
   return (
-    <tr>
+    <tr
+      className="flex justify-between place-items-center gap-4 bg-lightYellow
+      border-black border-t-2 border-b-2 rounded mt-2"
+    >
       <td
+        className="border-black border-x-2 rounded w-16 text-center bg-darkYellow"
         data-testid={
           `${dataIdUser}_${dataTestidPage}__element-order-table-item-number-${index}`
         }
@@ -33,6 +37,7 @@ export default function ProductRow({ product, index, handleClickRemoveItem = () 
         {+index + 1}
       </td>
       <td
+        className="grow"
         data-testid={
           `${dataIdUser}_${dataTestidPage}__element-order-table-name-${index}`
         }
@@ -40,6 +45,7 @@ export default function ProductRow({ product, index, handleClickRemoveItem = () 
         {name}
       </td>
       <td
+        className="w-16 text-center"
         data-testid={
           `${dataIdUser}_${dataTestidPage}__element-order-table-quantity-${index}`
         }
@@ -47,6 +53,7 @@ export default function ProductRow({ product, index, handleClickRemoveItem = () 
         {+quantity}
       </td>
       <td
+        className="w-16 text-center"
         data-testid={
           `${dataIdUser}_${dataTestidPage}__element-order-table-unit-price-${index}`
         }
@@ -55,6 +62,7 @@ export default function ProductRow({ product, index, handleClickRemoveItem = () 
           .replace('.', ',')}
       </td>
       <td
+        className="w-16 text-center"
         data-testid={
           `${dataIdUser}_${dataTestidPage}__element-order-table-sub-total-${index}`
         }
@@ -66,6 +74,7 @@ export default function ProductRow({ product, index, handleClickRemoveItem = () 
       { path === '/customer/checkout'
       && (
         <td
+          className="w-28 text-center border-black border-x-2 rounded bg-darkYellow"
           data-testid={
             `${dataIdUser}_${dataTestidPage}__element-order-table-remove-${index}`
           }

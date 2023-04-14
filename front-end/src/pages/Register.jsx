@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import fetchApi from '../services/fetchApi';
 import { validateName, validateEmail, validatePassword } from '../helpers/validations';
+import blackLogo from '../images/logo-birita-preto.png';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -37,31 +38,36 @@ export default function Register() {
     }
   }, [setIsDisabledRegisterError, name, email, password, history]);
   return (
-    <div className="login">
-      <form>
-        <h3 className="register-name">Nome</h3>
+    <div className="flex flex-col place-items-center h-full border-black border">
+      <img className="h-1/4 my-10" src={ blackLogo } alt="Logo Trybirita." />
+      <form
+        className="h-2/4 flex flex-col place-items-center place-content-center gap-2
+        border-black border-2 rounded-md mb-4"
+      >
+        <h1>Registro</h1>
         <input
+          className="border-black border rounded w-3/4"
           data-testid="common_register__input-name"
-          placeholder="Seu nome"
+          placeholder="Nome"
           value={ name }
           onChange={ ({ target: { value } }) => (handleChange(value, setName)) }
         />
-        <h3 className="register-email">Email</h3>
         <input
+          className="border-black border rounded w-3/4"
           data-testid="common_register__input-email"
           placeholder="seu-email@site.com.br"
           value={ email }
           onChange={ ({ target: { value } }) => (handleChange(value, setEmail)) }
         />
-        <h3 className="register-password">Senha</h3>
         <input
+          className="border-black border rounded w-3/4"
           data-testid="common_register__input-password"
-          placeholder="**********"
+          placeholder="Senha"
           value={ password }
           onChange={ ({ target: { value } }) => (handleChange(value, setPassword)) }
         />
         <button
-          className="button"
+          className="border-black border rounded w-3/4 bg-darkYellow"
           data-testid="common_register__button-register"
           type="button"
           disabled={ !validateRegister() }

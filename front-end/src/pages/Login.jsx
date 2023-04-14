@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import fetchApi from '../services/fetchApi';
+import blackLogo from '../images/logo-birita-preto.png';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -49,47 +50,55 @@ export default function Login() {
     }
   }, [setIsDisabledLoginError, email, password, history]);
   return (
-    <div className="login">
-      <form>
+    <div className="flex flex-col place-items-center h-full">
+      <img className="h-1/4 my-10" src={ blackLogo } alt="Logo Trybirita." />
+      <form
+        className="h-2/4 flex flex-col place-items-center place-content-center gap-6
+       border-black border-2 rounded-md mb-4"
+      >
         <h1 className="login-title">Login</h1>
         <input
+          className="border-black border rounded w-3/4"
           data-testid="common_login__input-email"
           placeholder="E-mail"
           value={ email }
           onChange={ ({ target: { value } }) => (handleChange(value, setEmail)) }
         />
         <input
-          className="password"
+          className="border-black border rounded w-3/4"
           type="password"
           data-testid="common_login__input-password"
-          placeholder="Password"
+          placeholder="Senha"
           value={ password }
           onChange={ ({ target: { value } }) => (handleChange(value, setPassword)) }
         />
         <button
-          className="button"
+          className="border-black border rounded w-3/4 bg-darkYellow"
           data-testid="common_login__button-login"
           type="button"
           disabled={ !validateLogin() }
           onClick={ handleClickLogin }
         >
-          login
+          ENTRAR
         </button>
-        <Link to="/register">
+        <Link
+          to="/register"
+          className="border-black border rounded w-3/4 bg-darkYellow text-center"
+        >
           <button
             data-testid="common_login__button-register"
             type="button"
           >
-            register
+            REGISTRAR
           </button>
         </Link>
-        {
-          isDisabledLoginError && (
-            <h3 data-testid="common_login__element-invalid-email">
-              Login não foi realizado com sucesso
-            </h3>)
-        }
       </form>
+      {
+        isDisabledLoginError && (
+          <h3 data-testid="common_login__element-invalid-email">
+            Login não foi realizado com sucesso
+          </h3>)
+      }
     </div>
   );
 }

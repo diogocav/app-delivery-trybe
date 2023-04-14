@@ -19,15 +19,20 @@ export default function Products() {
   return (
     <div>
       <NavBar />
-
-      {products.map((product, index) => (
-        <ProductCard
-          key={ product.id }
-          product={ product }
-          index={ index }
-
-        />
-      ))}
+      <div className="flex flex-wrap gap-6 p-6 place-content-center">
+        {products.map((product, index) => (
+          <span
+            key={ product.id }
+            className="border-black border-2 rounded"
+          >
+            <ProductCard
+              key={ product.id }
+              product={ product }
+              index={ index }
+            />
+          </span>
+        ))}
+      </div>
       <ShoppingCart />
     </div>
   );

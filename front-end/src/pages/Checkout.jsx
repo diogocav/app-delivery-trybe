@@ -63,20 +63,22 @@ export default function Checkout() {
   }, [productsSale]);
 
   return (
-    <div>
+    <div className="flex flex-col place-items-center h-full">
       <NavBar />
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Descrição</th>
-            <th>Quantidade</th>
-            <th>Valor Unitário</th>
-            <th>SubTotal</th>
-            <th>Remover Item</th>
-          </tr>
+      <h3 className="mt-8">FINALIZAR PEDIDO</h3>
+      <table
+        className="w-3/4 flex flex-col place-items-center place-content-center gap-6
+       border-black border-2 rounded-md mt-2 py-6"
+      >
+        <thead className="flex w-full justify-between gap-4 px-4">
+          <th className="w-16 text-center">ITEM</th>
+          <th className="grow text-center">DESCRIÇÃO</th>
+          <th className="w-16 text-center">QUANT.</th>
+          <th className="w-16 text-center">UN.</th>
+          <th className="w-16 text-center">TOTAL</th>
+          <th className="w-28 text-center">REMOVER</th>
         </thead>
-        <tbody>
+        <tbody className="w-full px-4">
           {productsSale.filter((product) => product.quantity !== 0)
             .map((product, index) => (
               <ProductRow
@@ -87,16 +89,21 @@ export default function Checkout() {
               />
             ))}
         </tbody>
+
+        <h3
+          className="border-black border rounded w-1/4 mx-4
+          bg-darkYellow text-center"
+          data-testid="customer_checkout__element-order-total-price"
+        >
+          TOTAL:
+          {' '}
+          <b>
+            R$
+            {' '}
+            { totalOrderPrice }
+          </b>
+        </h3>
       </table>
-
-      <h3
-        data-testid="customer_checkout__element-order-total-price"
-      >
-        {
-          totalOrderPrice
-        }
-
-      </h3>
 
       <AdressForm
         handleResponsiblePerson={ handleResponsiblePerson }
@@ -106,11 +113,12 @@ export default function Checkout() {
       />
 
       <button
+        className="border-black border rounded w-1/4 p-2 m-4 bg-darkYellow text-center"
         type="button"
         data-testid="customer_checkout__button-submit-order"
         onClick={ handleClickFinishSale }
       >
-        Finalizar
+        FINALIZAR
       </button>
     </div>
   );
