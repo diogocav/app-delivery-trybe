@@ -10,9 +10,25 @@ export default function Login() {
   const [isDisabledLoginError, setIsDisabledLoginError] = useState(false);
   const history = useHistory();
 
+  const redirect = (role) => {
+    if (role === 'customer') {
+      history.push('/customer/products');
+    }
+    if (role === 'seller') {
+      history.push('/seller/orders');
+    }
+    if (role === 'administrator') {
+      history.push('/admin/manage');
+    }
+  };
+
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('user')) || '';
-    if (data?.token) history.push('/customer/products');
+
+    if (data?.token) {
+      const decoded = jwtDecode(data.token);
+      redirect(decoded.data.role);
+    }
   }, [history]);
 
   const handleChange = (value, func) => func(value);
@@ -38,15 +54,7 @@ export default function Login() {
         ...decoded.data,
         token,
       }));
-      if (decoded.data.role === 'customer') {
-        history.push('/customer/products');
-      }
-      if (decoded.data.role === 'seller') {
-        history.push('/seller/orders');
-      }
-      if (decoded.data.role === 'administrator') {
-        history.push('/admin/manage');
-      }
+      redirect(decoded.data.role);
     }
   }, [setIsDisabledLoginError, email, password, history]);
   return (
@@ -102,3 +110,25 @@ export default function Login() {
     </div>
   );
 }
+
+// (
+//   1,
+//   'Delivery App Admin',
+//   'adm@deliveryapp.com',
+//   'a4c86edecc5aee06eff8fdeda69e0d04',
+//   'administrator'
+// ), -- senha: md5('--adm2@21!!--')
+// (
+//   2,
+//   'Fulana Pereira',
+//   'fulana@deliveryapp.com',
+//   '3c28d2b0881bf46457a853e0b07531c6',
+//   'seller'
+// ), -- senha: md5('fulana@123')
+// (
+//   3,
+//   'Cliente Zé Birita',
+//   'zebirita@email.com',
+//   '1c37466c159755ce1fa181bd247cb925',
+//   'customer'
+// ); -- senha: md5('$#zebirita#$')
